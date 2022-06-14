@@ -1,4 +1,33 @@
 <!DOCTYPE html>
+<?php
+   include('connectDB.php');
+   session_start();
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $myusername = $_POST['username'];
+      $mypassword = $_POST['password']; 
+      
+      $sql = "SELECT admin_id FROM admin WHERE admin_name = '$myusername' and password = '$mypassword'";
+      $result = mysqli_query($conn,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      //$active = $row['active'];
+      
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+      
+      if($count == 1) {
+         
+         $_SESSION['login_user'] = $myusername;
+         $error = "";
+         header("location: admin.php");
+      }else {
+         $error = "fail";
+      }
+   }
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +45,15 @@
         <label>Admin Name  : </label><input type = "text" name = "username" class = "box"/><br /><br />
         <label>Password  : </label><input type = "password" name = "password" class = "box" /><br/><br />
         <input type="submit" name="submit" id="submit">
+        <div style = "font-size:11px; color:#cc0000; margin-top:10px">
+        <?php  
+            if(isset($error)){
+                echo "Your name or password are wrong!";
+            }
+            else{
+                echo "";
+            }
+        ?></div>
     </form>
 </body>
 </html>
