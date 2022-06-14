@@ -1,0 +1,89 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url("font/Blackboard.ttf");
+}
+
+form{
+    font-family: myFirstFont;
+    text-align: center;
+    width: 30%;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: rgb(146, 236, 146);
+    border: 10px solid #a88f32;
+    border-radius: 10px;
+}
+#admin-btn{
+    font-family: myFirstFont;
+    background-color:#007AF3;
+    color: white;
+    padding: 10px;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#admin-btn:hover{
+    font-family: myFirstFont;
+    color:#007AF3;
+    background-color: white;
+    padding: 10px;
+    border-color: #007AF3;;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#lecturer-btn{
+    font-family: myFirstFont;
+    background-color:#007AF3;
+    color: white;
+    padding: 10px;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#lecturer-btn:hover{
+    font-family: myFirstFont;
+    color:#007AF3;
+    background-color: white;
+    padding: 10px;
+    border-color: #007AF3;;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+#student-btn{
+    font-family: myFirstFont;
+    background-color:#007AF3;
+    color: white;
+    padding: 10px;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#student-btn:hover{
+    font-family: myFirstFont;
+    color:#007AF3;
+    background-color: white;
+    padding: 10px;
+    border-color: #007AF3;;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#submit{
+    font-family: myFirstFont;
+    background-color:#a88f32;
+    color: white;
+    padding: 10px;
+    border-radius: 0.3em;
+    margin: 10px;
+}
+
+#submit:hover{ 
+    font-family: myFirstFont;
+    background-color:white;
+    color: #a88f32;
+    padding: 10px;
+    border-color: #a88f32;
+    border-radius: 0.3em;
+    margin: 10px;
+}
