@@ -19,7 +19,7 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
       
       if($count == 1) {
-         
+         $_SESSION['userid'] = intval($result) ; 
          $_SESSION['login_user'] = $myusername;
          $error = "";
          header("location: admin.php");
@@ -37,7 +37,7 @@
     <title>Admin Login</title>
 </head>
 <body>
-    <form name="myform" method="POST"  onsubmit="return selectForm();">
+    <form id="myform" method="POST"  onsubmit="return selectForm();">
     <h1 style="font-weight:normal">MyClass</h1>
         <button type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">Admin</button>
         <input type="submit" id="lecturer-btn" value="Lecturer" onclick="document.pressed=this.value">
