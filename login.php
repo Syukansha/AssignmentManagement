@@ -9,7 +9,7 @@
 </head>
 <body>
     <form name="myform" method="POST"  onsubmit="return selectForm();">
-    <h1 style="font-weight:normal">MyClass</h1>
+    <h1 style="font-weight:normal">EasyTask</h1>
         <button type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">Admin</button>
         <input type="submit" id="lecturer-btn" value="Lecturer" onclick="document.pressed=this.value">
         <input type="submit" id="student-btn" value="Student" onclick="document.pressed=this.value"><br>
