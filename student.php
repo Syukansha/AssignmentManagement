@@ -2,8 +2,9 @@
 <html lang="en">
 <?php
    include('session_student.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:login.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
+    
 }
 ?>
 <head>
@@ -23,8 +24,8 @@
             <li><a href="lecturer.php">Lecturer</a></li>
         </ul>
     </section>
-    <section id="welcome_student">
-        <h4>Welcome admin <?php echo $login_session; ?> !</h4>
+    <section id="welcome_admin">
+        <h4>Welcome <?php echo $login_session; ?> !</h4>
     </section>
 
 </body>

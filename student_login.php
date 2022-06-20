@@ -19,11 +19,11 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
       
       if($count == 1) {
-         $_SESSION['studentid'] = intval($result) ; 
+         $_SESSION['studentid'] = $row['student_id'] ; 
          $_SESSION['login_student'] = $myusername;
-         $_SESSION['login_student'] = $mypassword;
+         $_SESSION['student_pass'] = $mypassword;
          $error = "";
-         header("location: student.php");
+         header("location:student.php");
       }else {
          $error = "fail";
       }
@@ -38,7 +38,7 @@
     <title>Student login</title>
 </head>
 <body>
-    <form name="myform" onsubmit="return selectForm();">
+    <form name="myform" method="POST" onsubmit="return selectForm();">
         <h1 style="font-weight:normal">MyClass</h1>
         <input type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">
         <input type="submit" id="lecturer-btn" value="Lecturer" onclick="document.pressed=this.value">
@@ -70,7 +70,7 @@
         }
         else if(document.pressed == 'Student')
         {
-            document.myform.action ="student.html";
+            document.myform.action ="student_login.php";
         }
         return true;
     }

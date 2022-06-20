@@ -35,12 +35,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Admin Login</title>
+    <title>Student login</title>
 </head>
 <body>
-    <form id="myform" method="POST"  onsubmit="return selectForm();">
-    <h1 style="font-weight:normal">MyClass</h1>
-        <button type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">Admin</button>
+    <form name="myform" method="POST" onsubmit="return selectForm();">
+        <h1 style="font-weight:normal">MyClass</h1>
+        <input type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">
         <input type="submit" id="lecturer-btn" value="Lecturer" onclick="document.pressed=this.value">
         <input type="submit" id="student-btn" value="Student" onclick="document.pressed=this.value"><br>
         <label>Admin Name  : </label><input type = "text" name = "username" class = "box"/><br /><br />
