@@ -60,7 +60,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -134,7 +134,7 @@
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-home.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
                                 <li class="breadcrumb-item active">Lecturer</li>
                             </ol>
                         </div>

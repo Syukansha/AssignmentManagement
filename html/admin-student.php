@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+   include('session.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:login.php');    
+}
+$sqlstudent = "SELECT student_id,student_name,student_email,student_phone from students";
+$resultstudent = mysqli_query($conn,$sqlstudent);
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +68,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -136,6 +144,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
                                 <li class="breadcrumb-item active">Student</li>
+                                
                             </ol>
                         </div>
                     </div>
@@ -153,7 +162,7 @@
                                 <div class="row"></div>
                                 <div class="col-12"><h2>List of <b>Students</b></h2></div>
                                 <div class="float-right">
-                                    <button type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Student</button>
+                                    <a href="admin-add-student.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Student</a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -163,20 +172,29 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Contact</th>
+                                                <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Student</td>
-                                                <td>student@gmail.com</td>
-                                                <td>+60111234567</td>
-                                                <td><button type="button" class="btn btn-success">View</button>
+                                        <?php
+                                            while($row = mysqli_fetch_array($resultstudent,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['student_id'] . '</td>';
+                                                    echo '<td>' . $row['student_name'] . '</td>';
+                                                    echo '<td>' . $row['student_email'] . '</td>';
+                                                    echo '<td>' . $row['student_phone'] . '</td>';
+                                                    echo '<td>'  . '</td>';
+                                                    echo '<td><button type="button" class="btn btn-success">View</button>
                                                     <button type="button" class="btn btn-warning">Update</button>
                                                     <button type="button" class="btn btn-danger">Delete</button>
-                                                </td>
-                                            </tr>
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

@@ -67,7 +67,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -156,7 +156,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                This is home page
+                                <h4>Welcome admin <?php echo $login_session; ?> !</h4>
                             </div>
                         </div>
                     </div>

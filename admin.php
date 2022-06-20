@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+    include('connectDB.php');
    include('session.php');
    if(!isset($_SESSION['login_user'])){
     header('location:login.php');
+    
+    
     
 }
 ?>
@@ -17,16 +20,33 @@
 </head>
 <body>
     
-    <section id="sidebar">
-        <ul>
-            <li><a href="admin.php">Admin</a></li>
-            <li><a href="student.php">Student</a></li>
-            <li><a href="lecturer.php">Lecturer</a></li>
-        </ul>
-    </section>
+    
     <section id="welcome_admin">
-        <h4>Welcome admin <?php echo $login_session; ?> !</h4>
+        <h4>Welcome admin <?php echo $login_session; echo $row['admin_name'];?> !</h4>
     </section>
+    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Contact</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            $sqladmin = "SELECT * from admin where admin_id = $user_id";
+                                            $resultadmin = mysqli_query($conn,$sqladmin);
+                                            $row = mysqli_fetch_array($resultadmin,MYSQLI_ASSOC);
+                                            $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['admin_phone']);
+                                            foreach($data as $value)  
+                                            {    
+                                                 echo "<td> ". $value."</td>";    
+                                      
+                                            } 
+                                            mysqli_close($conn);
+                                        ?>
+                                    </table>
+                                </div>
 
 </body>
 </html>

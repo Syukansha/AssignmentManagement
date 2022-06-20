@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <?php
+    include('connectDB.php');
    include('session.php');
    if(!isset($_SESSION['login_user'])){
-    header('location:login.php');    
-}
-$sqladmin = "SELECT * from admin where admin_id = $user_id";
-$resultadmin = mysqli_query($conn,$sqladmin);
-$row = mysqli_fetch_array($resultadmin,MYSQLI_ASSOC);
-$data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['admin_phone']);
+    header('location:login.php');
+   } 
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+    
+        $sqlstud = "INSERT INTO students (student_id, student_name, student_email, student_phone, password) VALUES (NULL, '$name', '$email', '$phone', '$pass')";
+    
+        $resultstud = mysqli_query($conn,$sqlstud);
+    
+        if(isset($resultstud)){
+            echo "Success";
+        }
+        else{
+            echo "failed";
+        }
+    }
+    
+
 ?>
 <html lang="en">
 <head>
@@ -70,7 +88,7 @@ $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['a
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -139,13 +157,14 @@ $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['a
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Admin Profile</h4>
+                        <h4 class="text-themecolor">Student</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item active">Admin Profile</li>
+                                <li class="breadcrumb-item">Student</li>
+                                <li class="breadcrumb-item active">Add Student</li>
                             </ol>
                         </div>
                     </div>
@@ -160,31 +179,24 @@ $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['a
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                <!--Starting-->
+                                <form method="POST" action="admin-add-student.php">
+                                <table class="table table-bordered">
+                                        <tbody>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass">
+                                                <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
-                                        </thead>
-                                        <?php
-                                            foreach($data as $value)  
-                                            {    
-                                                 echo "<td> ". $value."</td>";    
-                                      
-                                            } 
-                                            mysqli_close($conn);
-                                        ?>
-                                        <td><a href="admin-edit.php" type="button" class="btn btn-success">Edit</a>
+                                        </tbody>
                                     </table>
-                                </div>
-                        
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>

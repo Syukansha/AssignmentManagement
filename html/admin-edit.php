@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <?php
-   include('session.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:login.php');    
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
 }
-$sqladmin = "SELECT * from admin where admin_id = $user_id";
-$resultadmin = mysqli_query($conn,$sqladmin);
-$row = mysqli_fetch_array($resultadmin,MYSQLI_ASSOC);
-$data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['admin_phone']);
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $adminName = $_POST['updatename'];
+    $adminPhone = $_POST['updatephone'];
+    $adminEmail = $_POST['updateemail'];
+    $password = $_POST['updatepass'];
+
+    $sqlupdate = "UPDATE admin set admin_name='$adminName', admin_phone='$adminPhone', admin_email='$adminEmail', password='$password' where admin_id = '$user_id'";
+
+    $resultupdate = mysqli_query($conn,$sqlupdate);
+
+    if(isset($resultupdate)){
+        echo "User success updated";
+    }
+    else{
+        echo "User failed updated";
+    }
+ }
+
+
+$sql = "select admin_name, admin_phone, admin_email, password from admin where admin_id = $user_id";
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+$msg = "";
+
+
+
+
+mysqli_close($conn);
+
 ?>
 <html lang="en">
 <head>
@@ -160,30 +189,24 @@ $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['a
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                <h4 class="card-title">Update Personal Information</h4>
+                                <form method="POST" action="admin-edit.php">
+                                <table class="table table-bordered">
+                                        <tbody>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="updatename" id="updatename" value="<?php echo $row['admin_name'];?>">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="updateemail" id="updateemail" value="<?php echo $row['admin_email'];?>">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="updatephone" id="updatephone" value="<?php echo $row['admin_phone'];?>">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="updatepass" id="updatepass" value="<?php echo $row['password'];?>">
+                                                <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
-                                        </thead>
-                                        <?php
-                                            foreach($data as $value)  
-                                            {    
-                                                 echo "<td> ". $value."</td>";    
-                                      
-                                            } 
-                                            mysqli_close($conn);
-                                        ?>
-                                        <td><a href="admin-edit.php" type="button" class="btn btn-success">Edit</a>
+                                        </tbody>
                                     </table>
-                                </div>
-                        
+                                </form>
                             </div>
                         </div>
                     </div>
