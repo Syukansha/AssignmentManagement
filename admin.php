@@ -4,6 +4,7 @@
    include('session.php');
    if(!isset($_SESSION['login_user'])){
     header('location:login.php');
+    
 }
 ?>
 <head>
@@ -24,7 +25,7 @@
         </ul>
     </section>
     <section id="welcome_admin">
-        <h4>Welcome admin <?php echo $_SESSION['login_user'] ?> !</h4>
+        <h4>Welcome admin <?php echo $login_session; ?> !</h4>
     </section>
 
 </body>

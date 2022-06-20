@@ -1,10 +1,5 @@
-@font-face {
-    font-family: myFirstFont;
-    src: url("font/Blackboard.ttf");
-}
-
 form{
-    font-family: myFirstFont;
+ 
     text-align: center;
     width: 30%;
     margin: 100px auto;
@@ -16,7 +11,7 @@ form{
 }
 
 #admin-btn{
-    font-family: myFirstFont;
+    
     background-color:#007AF3;
     color: white;
     padding: 10px;
@@ -25,7 +20,7 @@ form{
 }
 
 #admin-btn:hover{
-    font-family: myFirstFont;
+    
     color:#007AF3;
     background-color: white;
     padding: 10px;
@@ -35,7 +30,7 @@ form{
 }
 
 #lecturer-btn{
-    font-family: myFirstFont;
+    
     background-color:#007AF3;
     color: white;
     padding: 10px;
@@ -44,7 +39,7 @@ form{
 }
 
 #lecturer-btn:hover{
-    font-family: myFirstFont;
+   
     color:#007AF3;
     background-color: white;
     padding: 10px;
@@ -53,7 +48,7 @@ form{
     margin: 10px;
 }
 #student-btn{
-    font-family: myFirstFont;
+ 
     background-color:#007AF3;
     color: white;
     padding: 10px;
@@ -62,7 +57,7 @@ form{
 }
 
 #student-btn:hover{
-    font-family: myFirstFont;
+
     color:#007AF3;
     background-color: white;
     padding: 10px;
@@ -72,7 +67,7 @@ form{
 }
 
 #submit{
-    font-family: myFirstFont;
+ 
     background-color:#a88f32;
     color: white;
     padding: 10px;
@@ -81,7 +76,7 @@ form{
 }
 
 #submit:hover{ 
-    font-family: myFirstFont;
+
     background-color:white;
     color: #a88f32;
     padding: 10px;
@@ -103,12 +98,12 @@ form{
     margin: 10px;
 }
 #sidebar, a{
-    font-family: myFirstFont;
+    
     color: white;
     text-decoration: none;
 }
 #sidebar, a:hover{
-    font-family: myFirstFont;
+   
     color: white;
     text-decoration: none;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-   include('session.php');
+   include('session_student.php');
    if(!isset($_SESSION['login_user'])){
     header('location:login.php');
 }
@@ -23,7 +23,9 @@
             <li><a href="lecturer.php">Lecturer</a></li>
         </ul>
     </section>
-    
+    <section id="welcome_student">
+        <h4>Welcome admin <?php echo $login_session; ?> !</h4>
+    </section>
 
 </body>
 </html>

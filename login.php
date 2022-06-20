@@ -21,6 +21,7 @@
       if($count == 1) {
          $_SESSION['userid'] = intval($result) ; 
          $_SESSION['login_user'] = $myusername;
+         $_SESSION['login_pass'] = $mypassword;
          $error = "";
          header("location: admin.php");
       }else {
@@ -69,7 +70,7 @@
         }
         else if(document.pressed == 'Student')
         {
-            document.myform.action ="student.html";
+            document.myform.action ="student_login.php";
         }
         return true;
     }
