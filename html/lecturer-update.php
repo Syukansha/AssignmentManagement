@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+   include('session-lecturer.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:lect_login.php');
+    
+}
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +67,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -99,6 +106,10 @@
                         </li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
                             </a>
                         </li>
                     </ul>

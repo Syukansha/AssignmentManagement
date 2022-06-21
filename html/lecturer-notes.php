@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+   include('session-lecturer.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:lect_login.php');
+    
+}
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +67,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -101,6 +108,10 @@
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -123,7 +134,7 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Assignment</h4>
+                        <h4 class="text-themecolor">Notes</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
@@ -147,7 +158,7 @@
                                 <div class="row"></div>
                                 <div class="col-12"><h2>List of <b>Notes</b></h2></div>
                                 <div class="float-right">
-                                    <button type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</button>
+                                    <a href="lecturer-create-note.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
