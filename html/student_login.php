@@ -9,7 +9,7 @@
       $myusername = $_POST['username'];
       $mypassword = $_POST['password']; 
       
-      $sql = "SELECT admin_id FROM admin WHERE admin_name = '$myusername' and password = '$mypassword'";
+      $sql = "SELECT student_id FROM students WHERE student_name = '$myusername' and password = '$mypassword'";
       $result = mysqli_query($conn,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       //$active = $row['active'];
@@ -19,11 +19,11 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
       
       if($count == 1) {
-         $_SESSION['userid'] = intval($result) ; 
-         $_SESSION['login_user'] = $myusername;
-         $_SESSION['login_pass'] = $mypassword;
+         $_SESSION['studentid'] = $row['student_id'] ; 
+         $_SESSION['login_student'] = $myusername;
+         $_SESSION['student_pass'] = $mypassword;
          $error = "";
-         header("location: admin.php");
+         header("location:student.php");
       }else {
          $error = "fail";
       }
@@ -43,7 +43,7 @@
         <input type="submit" id="admin-btn" value="Admin" onclick="document.pressed=this.value">
         <input type="submit" id="lecturer-btn" value="Lecturer" onclick="document.pressed=this.value">
         <input type="submit" id="student-btn" value="Student" onclick="document.pressed=this.value"><br>
-        <label>Admin Name  : </label><input type = "text" name = "username" class = "box"/><br /><br />
+        <label>Student Name  : </label><input type = "text" name = "username" class = "box"/><br /><br />
         <label>Password  : </label><input type = "password" name = "password" class = "box" /><br/><br />
         <input type="submit" name="submit" id="submit">
         <div style = "font-size:11px; color:#cc0000; margin-top:10px">
@@ -62,11 +62,11 @@
     function selectForm(){
         if(document.pressed == 'Admin')
         {
-        document.myform.action ="login.php";
+        document.myform.action ="index.php";
         }
         else if(document.pressed == 'Lecturer')
         {
-            document.myform.action ="lect.html";
+            document.myform.action ="lect_login.php";
         }
         else if(document.pressed == 'Student')
         {

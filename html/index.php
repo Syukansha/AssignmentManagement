@@ -23,7 +23,7 @@
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_pass'] = $mypassword;
          $error = "";
-         header("location: admin.php");
+         header("location: admin-home.php");
       }else {
          $error = "fail";
       }
@@ -62,11 +62,11 @@
     function selectForm(){
         if(document.pressed == 'Admin')
         {
-        document.myform.action ="login.php";
+        document.myform.action ="index.php";
         }
         else if(document.pressed == 'Lecturer')
         {
-            document.myform.action ="lect.html";
+            document.myform.action ="lect_login.php";
         }
         else if(document.pressed == 'Student')
         {

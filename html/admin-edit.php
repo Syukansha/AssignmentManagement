@@ -1,4 +1,43 @@
 <!DOCTYPE html>
+<?php
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
+}
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $adminName = $_POST['updatename'];
+    $adminPhone = $_POST['updatephone'];
+    $adminEmail = $_POST['updateemail'];
+    $password = $_POST['updatepass'];
+
+    $sqlupdate = "UPDATE admin set admin_name='$adminName', admin_phone='$adminPhone', admin_email='$adminEmail', password='$password' where admin_id = '$user_id'";
+
+    $resultupdate = mysqli_query($conn,$sqlupdate);
+
+    if(isset($resultupdate)){
+        echo "User success updated";
+    }
+    else{
+        echo "User failed updated";
+    }
+ }
+
+
+$sql = "select admin_name, admin_phone, admin_email, password from admin where admin_id = $user_id";
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+$msg = "";
+
+
+
+
+mysqli_close($conn);
+
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +99,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -89,17 +128,17 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-profile.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
                         </li>
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-student.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-student.php" aria-expanded="false">
                                 <i class="fa fa-child"></i><span class="hide-menu">Student</span>
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="admin-lecturer.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-lecturer.php" aria-expanded="false">
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
@@ -129,13 +168,13 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Lecturer</h4>
+                        <h4 class="text-themecolor">Admin Profile</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-home.html">Home</a></li>
-                                <li class="breadcrumb-item active">Lecturer</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item active">Admin Profile</li>
                             </ol>
                         </div>
                     </div>
@@ -150,36 +189,24 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Lecturer</b></h2></div>
-                                <div class="float-right">
-                                    <button type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Lecturer</button>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+                                <h4 class="card-title">Update Personal Information</h4>
+                                <form method="POST" action="admin-edit.php">
+                                <table class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Lecturer</td>
-                                                <td>lecturer@gmail.com</td>
-                                                <td>+60111234567</td>
-                                                <td><button type="button" class="btn btn-success">View</button>
-                                                    <button type="button" class="btn btn-warning">Update</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
-                                                </td>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="updatename" id="updatename" value="<?php echo $row['admin_name'];?>">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="updateemail" id="updateemail" value="<?php echo $row['admin_email'];?>">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="updatephone" id="updatephone" value="<?php echo $row['admin_phone'];?>">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="updatepass" id="updatepass" value="<?php echo $row['password'];?>">
+                                                <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+   include('session.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:login.php');    
+}
+$sqladmin = "SELECT * from admin where admin_id = $user_id";
+$resultadmin = mysqli_query($conn,$sqladmin);
+$row = mysqli_fetch_array($resultadmin,MYSQLI_ASSOC);
+$data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['admin_phone']);
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +70,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -89,17 +99,17 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-profile.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
                         </li>
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-student.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-student.php" aria-expanded="false">
                                 <i class="fa fa-child"></i><span class="hide-menu">Student</span>
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="admin-lecturer.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-lecturer.php" aria-expanded="false">
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
@@ -129,12 +139,13 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Home</h4>
+                        <h4 class="text-themecolor">Admin Profile</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active">Home</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item active">Admin Profile</li>
                             </ol>
                         </div>
                     </div>
@@ -149,7 +160,30 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                This is home page
+                                <h4 class="card-title">Personal Information</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Contact</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            foreach($data as $value)  
+                                            {    
+                                                 echo "<td> ". $value."</td>";    
+                                      
+                                            } 
+                                            mysqli_close($conn);
+                                        ?>
+                                        <td><a href="admin-edit.php" type="button" class="btn btn-success">Edit</a>
+                                    </table>
+                                </div>
+                        
                             </div>
                         </div>
                     </div>

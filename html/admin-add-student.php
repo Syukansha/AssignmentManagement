@@ -1,4 +1,32 @@
 <!DOCTYPE html>
+<?php
+    include('connectDB.php');
+   include('session.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
+   } 
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+    
+        $sqlstud = "INSERT INTO students (student_id, student_name, student_email, student_phone, password) VALUES (NULL, '$name', '$email', '$phone', '$pass')";
+    
+        $resultstud = mysqli_query($conn,$sqlstud);
+    
+        if(isset($resultstud)){
+            echo "Success";
+        }
+        else{
+            echo "failed";
+        }
+    }
+    
+
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +88,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -89,17 +117,17 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-profile.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
                         </li>
                         <li> 
-                            <a class="waves-effect waves-dark" href="admin-student.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-student.php" aria-expanded="false">
                                 <i class="fa fa-child"></i><span class="hide-menu">Student</span>
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="admin-lecturer.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-lecturer.php" aria-expanded="false">
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
@@ -129,13 +157,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Admin Profile</h4>
+                        <h4 class="text-themecolor">Student</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-home.html">Home</a></li>
-                                <li class="breadcrumb-item active">Admin Profile</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item">Student</li>
+                                <li class="breadcrumb-item active">Add Student</li>
                             </ol>
                         </div>
                     </div>
@@ -150,28 +179,24 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                            </tr>
-                                        </thead>
+                                <!--Starting-->
+                                <form method="POST" action="admin-add-student.php">
+                                <table class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Admin</td>
-                                                <td>admin@gmail.com</td>
-                                                <td>+60111234567</td>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass">
+                                                <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
