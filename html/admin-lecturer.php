@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+   include('session.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:login.php');    
+}
+$sqlstudent = "SELECT student_id,student_name,student_email,student_phone from students";
+$resultstudent = mysqli_query($conn,$sqlstudent);
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">

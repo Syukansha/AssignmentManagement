@@ -24,8 +24,6 @@
             echo "failed";
         }
     }
-    
-
 ?>
 <html lang="en">
 <head>
