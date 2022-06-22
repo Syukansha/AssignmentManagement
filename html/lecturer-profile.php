@@ -4,7 +4,11 @@
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
     
-}
+    }
+    $sql = "SELECT * from lecturer where lect_id = $user_id";
+    $result = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $data = array($row['lect_id'], $row['lect_name'], $row['lect_email'], $row['lect_phone']);
 ?>
 <html lang="en">
 <head>
@@ -166,14 +170,14 @@
                                                 <th>Contact</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Lecturer</td>
-                                                <td>lecturer@gmail.com</td>
-                                                <td>+60111234567</td>
-                                            </tr>
-                                        </tbody>
+                                        <?php
+                                            foreach($data as $value)  
+                                            {    
+                                                 echo "<td> ". $value."</td>";    
+                                      
+                                            } 
+                                            mysqli_close($conn);
+                                        ?>
                                     </table>
                                 </div>
                             </div>
