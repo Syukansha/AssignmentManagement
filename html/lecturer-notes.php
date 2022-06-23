@@ -180,8 +180,10 @@
                                                     echo '<td>' . $count .'</td>';
                                                     echo '<td>' . $row['note_name'].'</td>';
                                                     echo '<td>' . $row['note_create'].'</td>';
-                                                    //nanti kat sini akan carry id note untuk dia download
-                                                    echo '<td><button type="button" class="btn btn-success">Download</button></td>';
+                                                    echo '<td><button type="button" class="btn btn-success">View</button>
+                                                    <a href="#" class="btn btn-warning">Update</a>
+                                                    <button type="button" class="btn btn-danger">Delete</button></td>';
+                                                    echo '</tr>';
                                                     echo '</tr>';
                                                     $count = $count + 1;
                                                 }
