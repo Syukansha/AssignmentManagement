@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
-    
-}
-    $sql = "SELECT * from notes"; //tukar nama table note kat sini
-    $result = mysqli_query($conn,$sql);
+ include('session.php');
+ if(!isset($_SESSION['login_user'])){
+  header('location:login.php');
+ } 
+
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+    //   $name = $_POST['notename'];
+      $comment = $_POST['notecomment'];
+      $date = date('Y-m-d');
+      $lect_id = "1234";
+      
+      //upload file
+       // name of the uploaded file
+        $filename = $_FILES['myfile']['name'];
+
+        // destination of the file on the server
+        $destination = 'uploads/' . $filename;
+
+        // get the file extension
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+        // the physical file on a temporary uploads directory on the server
+        $file = $_FILES['myfile']['tmp_name'];
+        $size = $_FILES['myfile']['size'];
+
+        if (!in_array($extension, ['zip', 'pdf', 'docx','pptx','jpeg','jpg','png'])) {
+            echo "You file extension must be .zip, .pdf, .docx, .pptx, .jpeg, or .png";
+        } elseif ($_FILES['myfile']['size'] > 5000000) { // file shouldn't be larger than 1Megabyte
+            echo "File too large!";
+        } else {
+            // move the uploaded (temporary) file to the specified destination
+            if (move_uploaded_file($file, $destination)) {
+                //adjust ikut nama table dengan attribute
+                $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id) VALUES ('$filename', '$size', '$comment', '$date','$lect_id')";
+                if (mysqli_query($conn, $sql)) {
+                    echo "File uploaded successfully";
+                    header('Location: lecturer-notes.php');
+                }
+            } else {
+                echo "Failed to upload file.";
+            }
+        }
+  }  
 ?>
 <html lang="en">
 <head>
@@ -110,10 +147,6 @@
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -136,13 +169,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Notes</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="lecturer-home.php">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="lecturer-notes.php">Notes</a></li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-notes.php">Notes</a></li>
+                                <li class="breadcrumb-item active">New Notes</li>
                             </ol>
                         </div>
                     </div>
@@ -157,38 +191,18 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Notes</b></h2></div>
-                                <div class="float-right">
-                                    <a href="lecturer-create-note.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Uploaded On</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                $count = 1;
-                                                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                    echo '<tr>';
-                                                    echo '<td>' . $count .'</td>';
-                                                    echo '<td>' . $row['note_name'].'</td>';
-                                                    echo '<td>' . $row['note_create'].'</td>';
-                                                    //nanti kat sini akan carry id note untuk dia download
-                                                    echo '<td><button type="button" class="btn btn-success">Download</button></td>';
-                                                    echo '</tr>';
-                                                    $count = $count + 1;
-                                                }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h4 class="card-title">Create New Notes</h4><hr>
+                                <form action="lecturer-createnotes.php" method="post" enctype="multipart/form-data" >
+                                    <div class="form-group">
+                                        <label>Notes</label>
+                                        <textarea class="form-control" rows="3" name="notecomment" id="notecomment"></textarea>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary" name="save">Create Notes</button> 
+                                    </div>
+                                    <input type="file" name="myfile"> <br>
+                                    
+                                  </form>
                             </div>
                         </div>
                     </div>
