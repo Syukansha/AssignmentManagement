@@ -7,6 +7,29 @@
 }
     $sql = "SELECT * from notes"; //tukar nama table note kat sini
     $result = mysqli_query($conn,$sql);
+    //download files
+    if(isset($_GET['noteid'])){
+        $id = $_GET['noteid'];
+
+        // fetch file to download from database
+        $sql = "SELECT * FROM notes WHERE note_id=$id";
+        $result = mysqli_query($conn, $sql);
+    
+        $file = mysqli_fetch_assoc($result);
+        $filepath = 'uploads/' . $file['note_name'];
+    
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($filepath));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize('uploads/' . $file['note_name']));
+            readfile('uploads/' . $file['note_name']);
+            exit;
+        }
+    }
 ?>
 <html lang="en">
 <head>
@@ -180,7 +203,7 @@
                                                     echo '<td>' . $count .'</td>';
                                                     echo '<td>' . $row['note_name'].'</td>';
                                                     echo '<td>' . $row['note_create'].'</td>';
-                                                    echo '<td><button type="button" class="btn btn-success">View</button>
+                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">Download</a>
                                                     <a href="#" class="btn btn-warning">Update</a>
                                                     <button type="button" class="btn btn-danger">Delete</button></td>';
                                                     echo '</tr>';

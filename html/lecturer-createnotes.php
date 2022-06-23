@@ -10,7 +10,7 @@
     //   $name = $_POST['notename'];
       $comment = $_POST['notecomment'];
       $date = date('Y-m-d');
-      $lect_id = "1234";
+      $lect_id = "1234"; //nanti replcae id lecturer kat sini
       
       //upload file
        // name of the uploaded file
