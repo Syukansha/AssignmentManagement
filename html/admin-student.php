@@ -185,9 +185,13 @@ $resultstudent = mysqli_query($conn,$sqlstudent);
                                                     echo '<td>' . $row['student_email'] . '</td>';
                                                     echo '<td>' . $row['student_phone'] . '</td>';
                                                     echo '<td>'  . '</td>';
-                                                    echo '<td><button type="button" class="btn btn-success">View</button>
-                                                    <button type="button" class="btn btn-warning">Update</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    $studentID = $row['student_id'];
+                                                    $studentName = $row['student_name'];
+                                                    $studentEmail = $row['student_email'];
+                                                    $studentPhone = $row['student_phone'];
+                                                    echo '<td><a href="admin-student-view.php?id='.$studentID.'?name='.$studentName.'" type="button" class="btn btn-success">View</a>
+                                                    <a href="admin-student-update.php?id='.$studentID.'?name='.$studentName.'" type="button" class="btn btn-warning">Update</a>
+                                                    <a href="admin-student-delete.php?id='.$studentID.'" type="button" class="btn btn-danger">Delete</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     

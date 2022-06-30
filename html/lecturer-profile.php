@@ -5,7 +5,7 @@
     header('location:lect_login.php');
     
     }
-    $sql = "SELECT * from lecturer where lect_id = $user_id";
+    $sql = "SELECT * from lecturers where lect_id = $user_id";
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $data = array($row['lect_id'], $row['lect_name'], $row['lect_email'], $row['lect_phone']);

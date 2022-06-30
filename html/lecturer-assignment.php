@@ -3,8 +3,10 @@
    include('session-lecturer.php');
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
-    
-}
+   }
+    $sqlassignment = "SELECT assignment_name, status,instruction,created_date,due_date from assignment";
+    $resultassignment = mysqli_query($conn,$sqlassignment);
+
 ?>
 <html lang="en">
 <head>
@@ -165,8 +167,8 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
                                                 <th>Name</th>
+                                                <th>Instruction</th>
                                                 <th>Status</th>
                                                 <th>Created On</th>
                                                 <th>Deadline</th>
@@ -174,18 +176,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Lab 1</td>
-                                                <td>Open</td>
-                                                <td>07/02/2022</td>
-                                                <td>08/02/2022</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success">View</button>
-                                                    <a href="lecturer-update.php" class="btn btn-warning">Update</a>
+                                        <?php
+                                            while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['assignment_name'] . '</td>';
+                                                    echo '<td>' . $row['instruction'] . '</td>';
+                                                    echo '<td>' . $row['status'] . '</td>';
+                                                    echo '<td>' . $row['created_date'] . '</td>';
+                                                    echo '<td>' . $row['due_date'] . '</td>';
+                                                    
+                                                    echo '<td><button type="button" class="btn btn-success">View</button>
+                                                    <button type="button" class="btn btn-warning">Update</button>
                                                     <button type="button" class="btn btn-danger">Delete</button>
-                                                </td>
-                                            </tr>
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

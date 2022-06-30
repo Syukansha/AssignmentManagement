@@ -5,6 +5,8 @@
 $sql = "SELECT * FROM assignment where lect_id=$user_id";
 $result = mysqli_query($conn, $sql);
 
+
+
 $files = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // Uploads files
@@ -14,6 +16,12 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
 
     // destination of the file on the server
     $destination = 'uploads/' . $filename;
+
+    $name = $_POST['assignment-name'];
+    $instruction = $_POST['assignment-instruction'];
+    $status = $_POST['assignment-status'];
+    $created = $_POST['assignment-created'];
+    $deadline = $_POST['assignment-deadline'];
 
     // get the file extension
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
@@ -29,7 +37,7 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
     } else {
         // move the uploaded (temporary) file to the specified destination
         if (move_uploaded_file($file, $destination)) {
-            $sql = "INSERT INTO assignment (assignment_name, status,instruction,created_date,due_date,size,lect_id) VALUES ('$filename', 'open','siapkan assignment','2022-11-11','2022-11-12',$size,$user_id)";
+            $sql = "INSERT INTO assignment (assignment_name, status,instruction,created_date,due_date,size,lect_id) VALUES ('$name', '$status','$instruction','$created','$deadline',$size,$user_id)";
             if (mysqli_query($conn, $sql)) {
                 echo "File uploaded successfully";
             }
@@ -58,7 +66,7 @@ if (isset($_GET['file_id'])) {
         header('Pragma: public');
         header('Content-Length: ' . filesize('uploads/' . $file['name']));
         readfile('uploads/' . $file['name']);
-
+        
         // Now update downloads count
         
         mysqli_query($conn, $updateQuery);

@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   include('lecturer-upload-assignment.php');
+    include('connectDB.php');
+   include('session.php');
    if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
-    
+    header('location:login.php');
+   } 
+   $studentID = $_GET['id'];
+
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $studentName = $_POST['name'];
+    $studentEmail = $_POST['email'];
+    $studentPhone = $_POST['phone'];
+    $studentPass = $_POST['pass'];
+
+    $sqlupdate = "UPDATE admin set student_name='$studentName', _phone='$studentPhone', admin_email='$studentEmail', password='$studentPass' where student_id = '$studentID'";
+
+    $resultupdate = mysqli_query($conn,$sqlupdate);
+
+    if(isset($resultupdate)){
+        echo "User success updated";
     }
+    else{
+        echo "User failed updated";
+}
+}
+
+   
+   $sqlstud = "SELECT * FROM students where student_id='$studentID'";
+    
+    $resultstud = mysqli_query($conn,$sqlstud);
+    $row = mysqli_fetch_array($resultstud,MYSQLI_ASSOC);
+   
+   $studentName = $row['student_name'];
+   $studentEmail = $row['student_email'];
+   $studentPhone = $row['student_phone'];
+   $studentPass = $row['password'];
+
     
 ?>
 <html lang="en">
@@ -69,7 +100,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -98,20 +129,22 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> 
-                            <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-classroom.php" aria-expanded="false">
-                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                        <li> 
+                            <a class="waves-effect waves-dark" href="admin-student.php" aria-expanded="false">
+                                <i class="fa fa-child"></i><span class="hide-menu">Student</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" href="admin-lecturer.php" aria-expanded="false">
+                                <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
+                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
                     </ul>
@@ -136,15 +169,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Assignment</h4>
+                        <h4 class="text-themecolor">Student</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-assignment.php">Assignment</a></li>
-                                <li class="breadcrumb-item active">New Assignment</li>
+                                <li class="breadcrumb-item">Student</li>
+                                <li class="breadcrumb-item active">Add Student</li>
                             </ol>
                         </div>
                     </div>
@@ -159,35 +191,24 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Create New Assignment</h4><hr>
-                                <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
-                                    <div class="form-group">
-                                      <label>Name</label>
-                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Instruction</label>
-                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Created on</label>
-                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Deadline</label>
-                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline">
-                                    </div>
-                                    <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
-                                    </div>
-                                    <input type="file" name="myfile"> <br>
-                                    
-                                  </form>
-                            </div>
+                                <!--Starting-->
+                                <form method="POST" action="admin-student-view.php">
+                                <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $studentName; ?>">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email" value="<?php echo $studentEmail; ?>">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone"value="<?php echo $studentPhone; ?>">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass" value="<?php echo $studentPass; ?>">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
                         </div>
                     </div>
                 </div>
