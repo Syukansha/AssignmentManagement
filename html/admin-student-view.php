@@ -7,25 +7,6 @@
    } 
    $studentID = $_GET['id'];
 
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $studentName = $_POST['name'];
-    $studentEmail = $_POST['email'];
-    $studentPhone = $_POST['phone'];
-    $studentPass = $_POST['pass'];
-
-    $sqlupdate = "UPDATE admin set student_name='$studentName', _phone='$studentPhone', admin_email='$studentEmail', password='$studentPass' where student_id = '$studentID'";
-
-    $resultupdate = mysqli_query($conn,$sqlupdate);
-
-    if(isset($resultupdate)){
-        echo "User success updated";
-    }
-    else{
-        echo "User failed updated";
-}
-}
-
    
    $sqlstud = "SELECT * FROM students where student_id='$studentID'";
     

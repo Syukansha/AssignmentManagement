@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <?php
-   include('session.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:login.php');    
-}
-$sqllecturer = "SELECT lect_id,lect_name,lect_email,lect_phone,password from lecturers";
-$resultlecturer = mysqli_query($conn,$sqllecturer);
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+        header('location:login.php');
+    } 
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+    
+        $sqllect = "INSERT INTO lecturers(lect_id, lect_name, lect_email, lect_phone, password) VALUES (NULL, '$name', '$email', '$phone', '$pass')";
+    
+        $resultlect = mysqli_query($conn,$sqllect);
+    
+        if(isset($resultlect)){
+            echo "Success";
+        }
+        else{
+            echo "failed";
+        }
+    }
 ?>
 <html lang="en">
 <head>
@@ -68,7 +86,7 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -137,13 +155,14 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Lecturer</h4>
+                        <h4 class="text-themecolor">Student</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item active">Lecturer</li>
+                                <li class="breadcrumb-item">Student</li>
+                                <li class="breadcrumb-item active">Add Lecturer</li>
                             </ol>
                         </div>
                     </div>
@@ -158,49 +177,24 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Lecturer</b></h2></div>
-                                <div class="float-right">
-                                    <a href="admin-add-lecturer.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Lecturer</a>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+                                <!--Starting-->
+                                <form method="POST" action="admin-add-lecturer.php">
+                                <table class="table table-bordered">
                                         <tbody>
-                                        <?php
-                                            while($row = mysqli_fetch_array($resultlecturer ,MYSQLI_ASSOC)) {
-                                                    echo '<tr>';
-                                                    echo '<td>' . $row['lect_id'] . '</td>';
-                                                    echo '<td>' . $row['lect_name'] . '</td>';
-                                                    echo '<td>' . $row['lect_email'] . '</td>';
-                                                    echo '<td>' . $row['lect_phone'] . '</td>';
-                                                    
-                                                    $lectID = $row['lect_id'];
-                                                    $lectName = $row['lect_name'];
-                                                    $lectEmail = $row['lect_email'];
-                                                    $lectPhone = $row['lect_phone'];
-                                                    echo '<td><a href="admin-lect-view.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-success">View</a>
-                                                    <a href="admin-lect-update.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-warning">Update</a>
-                                                    <a href="admin-lect-delete.php?id='.$lectID.'" type="button" class="btn btn-danger">Delete</a>
-                                                    </td>';
-                                                    echo '</tr>';
-                                                    
-                                                }
-
-                                            mysqli_close($conn);
-                                        ?>
+                                            <tr>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
