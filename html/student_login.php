@@ -23,7 +23,7 @@
          $_SESSION['login_student'] = $myusername;
          $_SESSION['student_pass'] = $mypassword;
          $error = "";
-         header("location:student.php");
+         header("location: student-home.php");
       }else {
          $error = "fail";
       }

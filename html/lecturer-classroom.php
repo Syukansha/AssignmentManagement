@@ -4,7 +4,10 @@
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
     
-}
+    }
+    $sqlclass = "SELECT * from class where lect_id = '$user_id'";
+    $result = mysqli_query($conn,$sqlclass);
+    
 ?>
 <html lang="en">
 <head>
@@ -160,31 +163,34 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Total Student</th>
+                                                <th>Class Id</th>
+                                                <th>Class Name</th>
+                                                <th>Class Code</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>CS2306A</td>
-                                                <td>35</td>
-                                                <td>
-                                                    <a href="lecturer-assignment.php" class="btn btn-success">Assignment</a>
-                                                    <a href="lecturer-student.php" class="btn btn-warning">Student</a>      
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>CS2306B</td>
-                                                <td>20</td>
-                                                <td>
-                                                    <a href="lecturer-assignment.php" class="btn btn-success">Assignment</a>
-                                                    <a href="#" class="btn btn-warning">Student</a>      
-                                                </td>
-                                            </tr>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['class_id'] . '</td>';
+                                                    echo '<td>' . $row['class_name'] . '</td>';
+                                                    echo '<td>' . $row['class_code'] . '</td>';
+
+                                                    $class_id = $row['class_id'];
+                                                    $class_name = $row['class_name'];
+                                                    $class_code = $row['class_code'];
+                                                    
+                                                    
+                                                    echo '<td><a href="lecturer-assignment-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
+                                                   
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

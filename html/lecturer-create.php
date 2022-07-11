@@ -181,6 +181,10 @@
                                         <label>Deadline</label>
                                         <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <input type="text" class="form-control" id="assignment-class" name="assignment-class">
+                                    </div>
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
                                     </div>

@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<?php
+   include('session-student.php');
+   include('student-upload-assignment.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
+    
+    }
+    $id = $_GET['assignment_id'];
+    $sqlassignment = "SELECT * FROM assignment where assignment_id='$id'";
+    $resultassignment = mysqli_query($conn,$sqlassignment);
+
+    $row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC);
+
+    $assignment_id = $row['assignment_id'];
+    $assignment_name = $row['assignment_name'];
+    $instruction = $row['instruction'];
+    $code = $row['class_code'];
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -147,17 +165,29 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Lab 1</h4><hr>
-                                <label><strong>Instruction</strong></label>
-                                <p>You need to solve solution for problem 1+1</p>
-                                <form>
+                                
+                                <form action="student-assignment-view.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
-                                      <label><strong>Work</strong></label>
-                                      <input type="file" class="form-control">
+                                      <label>Name</label>
+                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Instruction</label>
+                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction" ><?php echo $instruction ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>ID</label>
+                                        <input type="text" class="form-control" id="assignment-id" name="assignment-id" value="<?php echo $assignment_id ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code ?>">
                                     </div>
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary">Submit</button> 
+                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
                                     </div>
+                                    <input type="file" name="myfile"> <br>
+                                    
                                   </form>
                             </div>
                         </div>

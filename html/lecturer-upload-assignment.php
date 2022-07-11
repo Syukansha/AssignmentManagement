@@ -20,7 +20,7 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
     $status = $_POST['assignment-status'];
     $created = $_POST['assignment-created'];
     $deadline = $_POST['assignment-deadline'];
-
+    $code = $_POST['assignment-class'];
     // get the file extension
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
@@ -35,7 +35,7 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
     } else {
         // move the uploaded (temporary) file to the specified destination
         if (move_uploaded_file($file, $destination)) {
-            $sql = "INSERT INTO assignment (assignment_name, status,instruction,created_date,due_date,size,lect_id) VALUES ('$name', '$status','$instruction','$created','$deadline',$size,$user_id)";
+            $sql = "INSERT INTO assignment (assignment_name, status,instruction,created_date,due_date,size,class_code,lect_id) VALUES ('$filename', '$status','$instruction','$created','$deadline',$size,'$code',$user_id)";
             if (mysqli_query($conn, $sql)) {
                 echo "File uploaded successfully";
             }

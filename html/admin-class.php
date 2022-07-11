@@ -1,29 +1,11 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   include('download-assignment.php');
+   include('session.php');
    if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
-    
-    
+    header('location:index.php');
     }
-
-    if (isset($_GET['assignment_id'])) {
-
-        $assignmentID = $_GET['assignment_id'];
-        $sqlassignment = "SELECT * FROM assignment where assignment_id='$assignmentID'";
-
-        $resultassignment = mysqli_query($conn,$sqlassignment );
-        $row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC);
-
-
-        $assignment_id = $row['assignment_id'];
-        $assignment_name = $row['assignment_name'];
-        $instruction = $row['instruction'];
-        $status = $row['status'];
-        $created_date = $row['created_date'];
-        $due_date = $row['due_date'];
-    }
+    $sqlclass = "SELECT * from class";
+    $result = mysqli_query($conn,$sqlclass);
 ?>
 <html lang="en">
 <head>
@@ -86,7 +68,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -114,23 +96,22 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> 
-                            <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
-                                <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-classroom.php" aria-expanded="false">
-                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
-                            </a>
-                        </li>
+                        <ul id="sidebarnav">
+                            <li> 
+                                <a class="waves-effect waves-dark" href="student-home.html" aria-expanded="false">
+                                    <i class="fa fa-home"></i><span class="hide-menu">Home</span>
+                                </a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="student-profile.html" aria-expanded="false">
+                                    <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li> <a class="waves-effect waves-dark" href="student-class.html" aria-expanded="false">
+                                    <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                                </a>
+                            </li>
+                        </ul>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -153,15 +134,13 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Assignment</h4>
+                        <h4 class="text-themecolor">Class</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-assignment.php">Assignment</a></li>
-                                <li class="breadcrumb-item active">Assignment</li>
+                                <li class="breadcrumb-item">Home</li>
+                                <li class="breadcrumb-item active">Class</li>
                             </ol>
                         </div>
                     </div>
@@ -176,40 +155,44 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Create New Assignment</h4><hr>
-                                <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
-                                    <div class="form-group">
-                                      <label>Name</label>
-                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Instruction</label>
-                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction"><?php echo $instruction; ?></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status" value="<?php echo $status; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Created on</label>
-                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created" value="<?php echo $created_date; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Deadline</label>
-                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline" value="<?php echo $due_date; ?>">
-                                    </div>
-                                    <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
-                                    </div>
-                                    <a href="lecturer-assignment-view.php?file_id=<?php echo $row['assignment_id'] ?>">Download</a>
-                                    
-                                  </form>
+                            <h4 class="card-title">List of Class</h4>
+                                <div class="table-responsive">
+                                <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Class Id</th>
+                                                <th>Class Name</th>
+                                                <th>Class Code</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['class_id'] . '</td>';
+                                                    echo '<td>' . $row['class_name'] . '</td>';
+                                                    echo '<td>' . $row['class_code'] . '</td>';
+
+                                                    $class_id = $row['class_id'];
+                                                    $class_name = $row['class_name'];
+                                                    $class_code = $row['class_code'];
+                                                    
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
-                <!-- End PAge Content -->
+                <!-- End Page Content -->
                 <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->

@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+   include('session-student.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
+    
+    }
+    $sqlclass = "SELECT * from class";
+    $result = mysqli_query($conn,$sqlclass);
+    
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -149,34 +159,37 @@
                             <div class="card-body">
                             <h4 class="card-title">List of Class</h4>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
+                                <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Lecturer Name</th>
+                                                <th>Class Id</th>
+                                                <th>Class Name</th>
+                                                <th>Class Code</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>CSC5746C</td>
-                                                <td>Prof Dr. Mat Arif</td>
-                                                <td>
-                                                    <a href="student-assignment.html" class="btn btn-success">Assignment</a> 
-                                                    <a href="student-class-notes.html" class="btn btn-warning">Notes</a>    
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>CSC5806C</td>
-                                                <td>Dr. Syukri Kansha</td>
-                                                <td>
-                                                    <a href="student-assignment.html" class="btn btn-success">Assignment</a> 
-                                                    <a href="student-class-notes.html" class="btn btn-warning">Notes</a>     
-                                                </td>
-                                            </tr>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['class_id'] . '</td>';
+                                                    echo '<td>' . $row['class_name'] . '</td>';
+                                                    echo '<td>' . $row['class_code'] . '</td>';
+
+                                                    $class_id = $row['class_id'];
+                                                    $class_name = $row['class_name'];
+                                                    $class_code = $row['class_code'];
+                                                    
+                                                    
+                                                    echo '<td><a href="student-assignment.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
+                                                   
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

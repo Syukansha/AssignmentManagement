@@ -4,7 +4,7 @@
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
    }
-    $sqlassignment = "SELECT * from assignment";
+    $sqlassignment = "SELECT * from assignment where lect_id=$user_id";
     $resultassignment = mysqli_query($conn,$sqlassignment);
 
 ?>
@@ -173,6 +173,7 @@
                                                 <th>Status</th>
                                                 <th>Created On</th>
                                                 <th>Deadline</th>
+                                                <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -186,6 +187,7 @@
                                                     echo '<td>' . $row['status'] . '</td>';
                                                     echo '<td>' . $row['created_date'] . '</td>';
                                                     echo '<td>' . $row['due_date'] . '</td>';
+                                                    echo '<td>'.$row['class_code'].'</td>';
                                                     $assignment_id = $row['assignment_id'];
                                                     $assignment_name = $row['assignment_name'];
                                                     $instruction = $row['instruction'];

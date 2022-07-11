@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+   include('session-student.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
+    
+    }
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -144,7 +151,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                This is home page
+                                <h4>Welcome admin <?php echo $login_session; ?> !</h4>
                             </div>
                         </div>
                     </div>

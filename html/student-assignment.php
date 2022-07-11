@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<?php
+   include('session-student.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
+    
+    }
+    $code = $_GET['class_code'];
+    $sqlassignment = "SELECT * FROM assignment where class_code='$code'";
+    $resultassignment = mysqli_query($conn,$sqlassignment);
+    
+    
+
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +73,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -88,22 +101,23 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <ul id="sidebarnav">
-                            <li> 
-                                <a class="waves-effect waves-dark" href="student-home.html" aria-expanded="false">
-                                    <i class="fa fa-home"></i><span class="hide-menu">Home</span>
-                                </a>
-                            </li>
-                            <li> 
-                                <a class="waves-effect waves-dark" href="student-profile.html" aria-expanded="false">
-                                    <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
-                                </a>
-                            </li>
-                            <li> <a class="waves-effect waves-dark" href="student-class.html" aria-expanded="false">
-                                    <i class="fa fa-group"></i><span class="hide-menu">Class</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <li> 
+                            <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
+                                <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-classroom.php" aria-expanded="false">
+                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -126,14 +140,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Class</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="student-home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="student-class.html">Class</a></li>
-                                <li class="breadcrumb-item active">Assignments</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
+                                <li class="breadcrumb-item active">Assignment</li>
                             </ol>
                         </div>
                     </div>
@@ -150,29 +164,49 @@
                             <div class="card-body">
                                 <div class="row"></div>
                                 <div class="col-12"><h2>List of <b>Assignments</b></h2></div>
+                                <div class="float-right">
+                                    <a href="lecturer-create.php" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Assignment</a>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th>ID</th>
                                                 <th>Name</th>
+                                                <th>Instruction</th>
                                                 <th>Status</th>
                                                 <th>Created On</th>
                                                 <th>Deadline</th>
+                                                <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Lab 1</td>
-                                                <td>Open</td>
-                                                <td>07/02/2022</td>
-                                                <td>08/02/2022</td>
-                                                <td>
-                                                    <a href="student-assignment-view.html"><button type="button" class="btn btn-info">View</button></a>
-                                                </td>
-                                            </tr>
+                                        <?php
+                                            while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['assignment_id'] . '</td>';
+                                                    echo '<td>' . $row['assignment_name'] . '</td>';
+                                                    echo '<td>' . $row['instruction'] . '</td>';
+                                                    echo '<td>' . $row['status'] . '</td>';
+                                                    echo '<td>' . $row['created_date'] . '</td>';
+                                                    echo '<td>' . $row['due_date'] . '</td>';
+                                                    echo '<td>'.$row['class_code']. '</td>';
+                                                    $assignment_id = $row['assignment_id'];
+                                                    $assignment_name = $row['assignment_name'];
+                                                    $instruction = $row['instruction'];
+                                                    $created_date = $row['created_date'];
+                                                    $due_date = $row['due_date'];
+                                                    $code = $row['class_code'];
+                                                    
+                                                    echo '<td><a href="student-assignment-view.php?assignment_id='.$assignment_id.'class_code='.$code.'assignment_name='.$assignment_name.'" type="button" class="btn btn-success">View</a>
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>
