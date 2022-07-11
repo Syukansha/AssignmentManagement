@@ -1,10 +1,8 @@
 <?php
 // connect to the database
 
-
 $sql = "SELECT * FROM assignment where lect_id=$user_id";
 $result = mysqli_query($conn, $sql);
-
 
 
 $files = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -47,15 +45,17 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
     }
 }
 
-if (isset($_GET['file_id'])) {
-    $id = $_GET['file_id'];
+
+
+if (isset($_GET['assignment_id'])) {
+    $id = $_GET['assignment_id'];
 
     // fetch file to download from database
     $sql = "SELECT * FROM assignment WHERE assignment_id=$id";
     $result = mysqli_query($conn, $sql);
 
     $file = mysqli_fetch_assoc($result);
-    $filepath = 'uploads/' . $file['name'];
+    $filepath = 'uploads/' . $file['assignment_name'];
 
     if (file_exists($filepath)) {
         header('Content-Description: File Transfer');
@@ -64,12 +64,11 @@ if (isset($_GET['file_id'])) {
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
-        header('Content-Length: ' . filesize('uploads/' . $file['name']));
-        readfile('uploads/' . $file['name']);
-        
+        header('Content-Length: ' . filesize('uploads/' . $file['assignment_name']));
+        readfile('uploads/' . $file['assignment_name']);
+
         // Now update downloads count
-        
-        mysqli_query($conn, $updateQuery);
+      
         exit;
     }
 

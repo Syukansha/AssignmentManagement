@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+    include('connectDB.php');
    include('session-lecturer.php');
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
