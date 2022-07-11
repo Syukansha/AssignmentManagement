@@ -184,7 +184,7 @@
                                 <div class="row"></div>
                                 <div class="col-12"><h2>List of <b>Notes</b></h2></div>
                                 <div class="float-right">
-                                    <a href="lecturer-create-note.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
+                                    <a href="lecturer-createnotes.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
- include('session.php');
+ include('session-lecturer.php');
  if(!isset($_SESSION['login_user'])){
-  header('location:login.php');
+  header('location:lect_login.php');
  } 
 
   if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,7 +34,7 @@
             // move the uploaded (temporary) file to the specified destination
             if (move_uploaded_file($file, $destination)) {
                 //adjust ikut nama table dengan attribute
-                $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id) VALUES ('$filename', '$size', '$comment', '$date','$lect_id')";
+                $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id) VALUES ('$filename', '$size', '$comment', '$date','$user_id')";
                 if (mysqli_query($conn, $sql)) {
                     echo "File uploaded successfully";
                     header('Location: lecturer-notes.php');

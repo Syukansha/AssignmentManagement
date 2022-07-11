@@ -33,6 +33,7 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
             $sql = "INSERT INTO submission(sub_name, size,class_code,sub_date,assignment_id,student_id) VALUES ('$filename', '$size','$code','$date','$id','$student')";
             if (mysqli_query($conn, $sql)) {
                 echo "File uploaded successfully";
+                header("location: student-class.php");
             }
         } else {
             echo "Failed to upload file.";
