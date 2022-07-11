@@ -4,7 +4,7 @@
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
    }
-    $sqlassignment = "SELECT assignment_name, status,instruction,created_date,due_date from assignment";
+    $sqlassignment = "SELECT * from assignment";
     $resultassignment = mysqli_query($conn,$sqlassignment);
 
 ?>
@@ -167,6 +167,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Instruction</th>
                                                 <th>Status</th>
@@ -179,13 +180,19 @@
                                         <?php
                                             while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
                                                     echo '<tr>';
+                                                    echo '<td>' . $row['assignment_id'] . '</td>';
                                                     echo '<td>' . $row['assignment_name'] . '</td>';
                                                     echo '<td>' . $row['instruction'] . '</td>';
                                                     echo '<td>' . $row['status'] . '</td>';
                                                     echo '<td>' . $row['created_date'] . '</td>';
                                                     echo '<td>' . $row['due_date'] . '</td>';
+                                                    $assignment_id = $row['assignment_id'];
+                                                    $assignment_name = $row['assignment_name'];
+                                                    $instruction = $row['instruction'];
+                                                    $created_date = $row['created_date'];
+                                                    $due_date = $row['due_date'];
                                                     
-                                                    echo '<td><button type="button" class="btn btn-success">View</button>
+                                                    echo '<td><a href="lecturer-assignment-view.php?assignment_id='.$assignment_id.'" type="button" class="btn btn-success">View</a>
                                                     <button type="button" class="btn btn-warning">Update</button>
                                                     <button type="button" class="btn btn-danger">Delete</button>
                                                     </td>';

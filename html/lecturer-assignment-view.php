@@ -1,36 +1,12 @@
 <!DOCTYPE html>
 <?php
-    include('connectDB.php');
    include('session-lecturer.php');
+   include('download-assignment.php');
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
     
-}
-    $sql = "SELECT * from notes"; //tukar nama table note kat sini
-    $result = mysqli_query($conn,$sql);
-    //download files
-    if(isset($_GET['noteid'])){
-        $id = $_GET['noteid'];
-
-        // fetch file to download from database
-        $sql = "SELECT * FROM notes WHERE note_id=$id";
-        $result = mysqli_query($conn, $sql);
-    
-        $file = mysqli_fetch_assoc($result);
-        $filepath = 'uploads/' . $file['note_name'];
-    
-        if (file_exists($filepath)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($filepath));
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize('uploads/' . $file['note_name']));
-            readfile('uploads/' . $file['note_name']);
-            exit;
-        }
     }
+    
 ?>
 <html lang="en">
 <head>
@@ -130,7 +106,7 @@
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
@@ -160,13 +136,15 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Notes</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="lecturer-home.php">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="lecturer-notes.php">Notes</a></li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-assignment.php">Assignment</a></li>
+                                <li class="breadcrumb-item active">Assignment</li>
                             </ol>
                         </div>
                     </div>
@@ -181,40 +159,34 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Notes</b></h2></div>
-                                <div class="float-right">
-                                    <a href="lecturer-create-note.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Uploaded On</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                $count = 1;
-                                                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                    echo '<tr>';
-                                                    echo '<td>' . $count .'</td>';
-                                                    echo '<td>' . $row['note_name'].'</td>';
-                                                    echo '<td>' . $row['note_create'].'</td>';
-                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">Download</a>
-                                                    <a href="lecturer-update-notes.php?noteid'.$row['note_id'].'" class="btn btn-warning">Update</a>
-                                                    <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-warning">Delete</a></td>';
-                                                    echo '</tr>';
-                                                    echo '</tr>';
-                                                    $count = $count + 1;
-                                                }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h4 class="card-title">Create New Assignment</h4><hr>
+                                <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
+                                    <div class="form-group">
+                                      <label>Name</label>
+                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Instruction</label>
+                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction"><?php echo $instruction; ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status" value="<?php echo $status; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Created on</label>
+                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created" value="<?php echo $created_date; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Deadline</label>
+                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline" value="<?php echo $due_date; ?>">
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
+                                    </div>
+                                    <a href="lecturer-assignment-view.php?assignment_id='.$assignment_id.'file_id='.$assignment_id.'" type="button" class="btn btn-success">View</a>
+                                    
+                                  </form>
                             </div>
                         </div>
                     </div>
