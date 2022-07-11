@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
-    
-}
-    $sql = "SELECT * from notes"; //tukar nama table note kat sini
-    $result = mysqli_query($conn,$sql);
-    //download files
-    if(isset($_GET['noteid'])){
-        $id = $_GET['noteid'];
+    include('connect.php');
+    $id = $_GET['noteid'];
+    $showsql = "SELECT * FROM notes WHERE note_id = '$id'";
+    $resultstud = mysqli_query($conn,$showsql);
+    $row = mysqli_fetch_array($resultstud,MYSQLI_ASSOC);
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        // fetch file to download from database
-        $sql = "SELECT * FROM notes WHERE note_id=$id";
-        $result = mysqli_query($conn, $sql);
-    
-        $file = mysqli_fetch_assoc($result);
-        $filepath = 'uploads/' . $file['note_name'];
-    
-        if (file_exists($filepath)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($filepath));
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize('uploads/' . $file['note_name']));
-            readfile('uploads/' . $file['note_name']);
-            exit;
+      $comment = $_POST['notecomment'];
+      $date = date('Y-m-d');
+      $id = $_POST['noteid'];
+      $namee = $_POST['fname'];
+      $lectid = $_POST['lect_id'];
+      
+      //upload file
+       // name of the uploaded file
+        $filename = $_FILES['myfile']['name'];
+
+        // destination of the file on the server
+        $destination = 'uploads/' . $filename;
+        $directory = 'uploads/';
+
+        // get the file extension
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+        // the physical file on a temporary uploads directory on the server
+        $file = $_FILES['myfile']['tmp_name'];
+        $size = $_FILES['myfile']['size'];
+
+        if (!in_array($extension, ['zip', 'pdf', 'docx','pptx','jpeg','jpg','png'])) {
+            echo "You file extension must be .zip, .pdf, .docx, .pptx, .jpeg, or .png";
+        } elseif ($_FILES['myfile']['size'] > 5000000) { // file shouldn't be larger than 1Megabyte
+            echo "File too large!";
+        } else {
+            unlink($directory,$namee); //remove previous file
+            // move the uploaded (temporary) file to the specified destination
+            if (move_uploaded_file($file, $destination)) {
+                $sql = "UPDATE notes SET note_name = '$filename', note_size = '$size', note_comment = '$comment', note_create = '$date', lect_id = '$lectid' WHERE note_id = '$id'";
+                if (mysqli_query($conn, $sql)) {
+                    echo "File uploaded successfully";
+                    header('Location: lecturer-notes.php');
+                }else{
+                    die(mysqli_error($conn));
+                }
+            } else {
+                echo "Failed to upload file.";
+            }
         }
-    }
+  }  
 ?>
 <html lang="en">
 <head>
@@ -133,10 +151,6 @@
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -159,13 +173,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Notes</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="lecturer-home.php">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="lecturer-notes.php">Notes</a></li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-notes.php">Notes</a></li>
+                                <li class="breadcrumb-item active">Update Notes</li>
                             </ol>
                         </div>
                     </div>
@@ -180,40 +195,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Notes</b></h2></div>
-                                <div class="float-right">
-                                    <a href="lecturer-create-note.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Uploaded On</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                $count = 1;
-                                                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                    echo '<tr>';
-                                                    echo '<td>' . $count .'</td>';
-                                                    echo '<td>' . $row['note_name'].'</td>';
-                                                    echo '<td>' . $row['note_create'].'</td>';
-                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">Download</a>
-                                                    <a href="lecturer-update-notes.php?noteid'.$row['note_id'].'" class="btn btn-warning">Update</a>
-                                                    <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-warning">Delete</a></td>';
-                                                    echo '</tr>';
-                                                    echo '</tr>';
-                                                    $count = $count + 1;
-                                                }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h4 class="card-title">Update Notes</h4><hr>
+                                <form action="lecturer-updatenotes.php" method="post" enctype="multipart/form-data" >
+                                    <div class="form-group">
+                                        <label>Notes</label>
+                                        <textarea class="form-control" rows="3" name="notecomment" id="notecomment"><?php echo $row['note_comment'];?></textarea>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary" name="save">Update Notes</button> 
+                                    </div>
+                                    <input type="file" name="myfile"><br>
+                                    <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
+                                    <input type="hidden" name="fname" value="<?php echo $row['note_name'];?>">
+                                    <input type="hidden" name="lectid" value="<?php echo $row['lect_id'];?>">
+                                  </form>
                             </div>
                         </div>
                     </div>
