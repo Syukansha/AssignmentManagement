@@ -101,23 +101,20 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> 
-                            <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
-                                <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-classroom.php" aria-expanded="false">
-                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
-                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
-                            </a>
-                        </li>
+                    <li> 
+                                <a class="waves-effect waves-dark" href="student-home.php" aria-expanded="false">
+                                    <i class="fa fa-home"></i><span class="hide-menu">Home</span>
+                                </a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="student-profile.php" aria-expanded="false">
+                                    <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li> <a class="waves-effect waves-dark" href="student-class.php" aria-expanded="false">
+                                    <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                                </a>
+                            </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
