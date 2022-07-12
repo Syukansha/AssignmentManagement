@@ -7,7 +7,7 @@
 
   if($_SERVER["REQUEST_METHOD"] == "POST") {
   
-    //   $name = $_POST['notename'];
+      $classcode = $_POST['class_code'];
       $comment = $_POST['notecomment'];
       $date = date('Y-m-d');
       $lect_id = "1234"; //nanti replcae id lecturer kat sini
@@ -34,7 +34,7 @@
             // move the uploaded (temporary) file to the specified destination
             if (move_uploaded_file($file, $destination)) {
                 //adjust ikut nama table dengan attribute
-                $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id) VALUES ('$filename', '$size', '$comment', '$date','$user_id')";
+                $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id, class_code) VALUES ('$filename', '$size', '$comment', '$date','$user_id', '$classcode')";
                 if (mysqli_query($conn, $sql)) {
                     echo "File uploaded successfully";
                     echo '<script>';
@@ -205,7 +205,7 @@
                                         <textarea class="form-control" rows="3" name="notecomment" id="notecomment"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label>Class</label>
+                                        <label>Class Code</label>
                                         <input type="text" id="code" name="code">
                                     </div>
                                     <div class="float-right">
