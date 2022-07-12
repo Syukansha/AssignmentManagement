@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <?php
+    include('connectDB.php');
    include('session-lecturer.php');
    if(!isset($_SESSION['login_user'])){
     header('location:lect_login.php');
     
-    }
-    $sqlclass = "SELECT * from class where lect_id = '$user_id'";
-    $result = mysqli_query($conn,$sqlclass);
+}
+    $classcode = $_GET['class_code'];
+    $sql = "SELECT * from notes WHERE class_code = '$classcode'";
+    $result = mysqli_query($conn,$sql);
+    //download files
+    if(isset($_GET['noteid'])){
+        $id = $_GET['noteid'];
+
+        // fetch file to download from database
+        $sql = "SELECT * FROM notes WHERE noteid=$id";
+        $result = mysqli_query($conn, $sql);
     
+        $file = mysqli_fetch_assoc($result);
+        $filepath = 'uploads/' . $file['note_name'];
+    
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($filepath));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize('uploads/' . $file['note_name']));
+            readfile('uploads/' . $file['note_name']);
+            exit;
+        }
+    }
 ?>
 <html lang="en">
 <head>
@@ -137,13 +161,13 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Class</h4>
+                        <h4 class="text-themecolor">Notes</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item active">Class</li>
+                                <li class="breadcrumb-item"><a href="lecturer-home.php">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="lecturer-notes.php">Notes</a></li>
                             </ol>
                         </div>
                     </div>
@@ -158,39 +182,39 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                            <h4 class="card-title">List of Class</h4>
+                                <div class="row"></div>
+                                <div class="col-12"><h2>List of <b>Notes</b></h2></div>
+                                <div class="float-right">
+                                <a href="lecturer-createnotes.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Notes</a>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Class Id</th>
-                                                <th>Class Name</th>
-                                                <th>Class Code</th>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Uploaded On</th>
+                                                <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                            while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                                $count = 1;
+                                                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                     echo '<tr>';
-                                                    echo '<td>' . $row['class_id'] . '</td>';
-                                                    echo '<td>' . $row['class_name'] . '</td>';
-                                                    echo '<td>' . $row['class_code'] . '</td>';
-
-                                                    $class_id = $row['class_id'];
-                                                    $class_name = $row['class_name'];
-                                                    $class_code = $row['class_code'];
-                                                    
-                                                    
-                                                    echo '<td><a href="lecturer-assignment-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a><a href="lecturer-notes-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
-                                                   
-                                                    </td>';
+                                                    echo '<td>' . $count .'</td>';
+                                                    echo '<td>' . $row['note_name'].'</td>';
+                                                    echo '<td>' . $row['note_create'].'</td>';
+                                                    echo '<td>' . $row['class_code'].'</td>';
+                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">Download</a>
+                                                    <a href="lecturer-update-notes.php?noteid'.$row['note_id'].'" class="btn btn-warning">Update</a>
+                                                    <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-danger">Delete</a></td>';
                                                     echo '</tr>';
-                                                    
+                                                    echo '</tr>';
+                                                    $count = $count + 1;
                                                 }
-
-                                            mysqli_close($conn);
-                                        ?>
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
