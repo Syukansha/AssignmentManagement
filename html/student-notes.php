@@ -6,8 +6,8 @@
     
     }
     $code = $_GET['class_code'];
-    $sqlassignment = "SELECT * FROM notes where class_code='$code'";
-    $resultassignment = mysqli_query($conn,$sqlassignment);
+    $sqlnotes = "SELECT * FROM notes where class_code='$code'";
+    $resultnotes = mysqli_query($conn,$sqlnotes);
     
     
 
@@ -163,9 +163,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Assignments</b></h2></div>
+                                <div class="col-12"><h2>List of <b>Notes</b></h2></div>
                                 <div class="float-right">
-                                    <a href="lecturer-create.php" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Assignment</a>
+                                  
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -173,33 +173,28 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Name</th>
-                                                <th>Instruction</th>
-                                                <th>Status</th>
-                                                <th>Created On</th>
-                                                <th>Deadline</th>
+                                                <th>Comment</th>
+                                                <th>Upload on</th>
                                                 <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                            while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
+                                            while($row = mysqli_fetch_array($resultnotes,MYSQLI_ASSOC)) {
                                                     echo '<tr>';
-                                                    echo '<td>' . $row['assignment_id'] . '</td>';
-                                                    echo '<td>' . $row['assignment_name'] . '</td>';
-                                                    echo '<td>' . $row['instruction'] . '</td>';
-                                                    echo '<td>' . $row['status'] . '</td>';
-                                                    echo '<td>' . $row['created_date'] . '</td>';
-                                                    echo '<td>' . $row['due_date'] . '</td>';
+                                                    echo '<td>' . $row['note_id'] . '</td>';
+                                                    echo '<td>' . $row['note_name'] . '</td>';
+                                                    echo '<td>' . $row['note_comment'] . '</td>';                                        
+                                                    echo '<td>' . $row['note_create'] . '</td>';
                                                     echo '<td>'.$row['class_code']. '</td>';
-                                                    $assignment_id = $row['assignment_id'];
-                                                    $assignment_name = $row['assignment_name'];
-                                                    $instruction = $row['instruction'];
-                                                    $created_date = $row['created_date'];
-                                                    $due_date = $row['due_date'];
+                                                    $note_id = $row['note_id'];
+                                                    $note_name = $row['note_name'];
+                                                    $comment = $row['note_comment'];
+                                                    $created_date = $row['note_create'];                                                  
                                                     $code = $row['class_code'];
                                                     
-                                                    echo '<td><a href="student-assignment-view.php?assignment_id='.$assignment_id.'class_code='.$code.'assignment_name='.$assignment_name.'" type="button" class="btn btn-success">View</a>
+                                                    echo '<td><a href="student-assignment-view.php?note_id='.$note_id.'class_code='.$code.'note_name='.$note_name.'" type="button" class="btn btn-success">View</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     
