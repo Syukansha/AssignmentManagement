@@ -206,7 +206,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Class Code</label>
-                                        <input type="text" id="code" name="code">
+                                        <input type="text" class="form-control" id="code" name="code">
                                     </div>
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary" name="save">Create Notes</button> 
