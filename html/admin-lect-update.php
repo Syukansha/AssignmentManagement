@@ -7,7 +7,7 @@
      } 
     $lectId = $_GET['id'];
 
-    $sqllect = "SELECT * FROM lecturer where lect_id='$lectId'";
+    $sqllect = "SELECT * FROM lecturers where lect_id='$lectId'";
     
     $resultLect = mysqli_query($conn,$sqllect);
     $row = mysqli_fetch_array($resultLect,MYSQLI_ASSOC);
@@ -25,7 +25,7 @@
         $Phone = $_POST['phone'];
         $Pass = $_POST['pass'];
 
-        $sqlupdate = "UPDATE lecturer set lect_name='$Name', lect_phone='$Phone', password='$Pass', lect_email='$Email' where lect_id = '$lid'";
+        $sqlupdate = "UPDATE lecturers set lect_name='$Name', lect_phone='$Phone', password='$Pass', lect_email='$Email' where lect_id = '$lid'";
 
         $resultupdate = mysqli_query($conn,$sqlupdate);
 
@@ -33,8 +33,9 @@
             echo "User success updated";
             echo '<script>';
             echo 'alert("Successfully update!");';
-            echo 'location="admin-lecturer.php";';
+            //echo 'location="admin-lecturer.php";';
             echo '</script>';
+            header("location: admin-lecturer.php");
         }
         else{
             echo "User failed updated";

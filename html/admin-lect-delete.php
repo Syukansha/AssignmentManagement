@@ -1,8 +1,8 @@
 <?php 
     include('connectDB.php');
-    include('session.php');
+    include('session-lecturer.php');
     $lectid = $_GET['id'];
-    $sqldelete = "DELETE FROM lecturer where lect_id = '$lectid'";
+    $sqldelete = "DELETE FROM lecturers where lect_id = '$lectid'";
 
     $resultdelete = mysqli_query($conn,$sqldelete);
 

@@ -182,7 +182,7 @@
                                                     
                                                     
                                                     echo '<td><a href="student-assignment.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
-                                                   
+                                                    <a href="student-notes.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Notes</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     

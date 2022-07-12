@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   include('lecturer-upload-assignment.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
-    }
+   include('session-student.php');
+   if(!isset($_SESSION['login_student'])){
+    header('location:student_login.php');
     
+    }
+    $code = $_GET['class_code'];
+    $sqlassignment = "SELECT * FROM notes where class_code='$code'";
+    $resultassignment = mysqli_query($conn,$sqlassignment);
+    
+    
+
 ?>
 <html lang="en">
 <head>
@@ -105,7 +110,7 @@
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
@@ -142,8 +147,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-assignment.php">Assignment</a></li>
-                                <li class="breadcrumb-item active">New Assignment</li>
+                                <li class="breadcrumb-item active">Assignment</li>
                             </ol>
                         </div>
                     </div>
@@ -158,38 +162,54 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Create New Assignment</h4><hr>
-                                <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
-                                    <div class="form-group">
-                                      <label>Name</label>
-                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Instruction</label>
-                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Created on</label>
-                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Deadline</label>
-                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Class</label>
-                                        <input type="text" class="form-control" id="assignment-class" name="assignment-class">
-                                    </div>
-                                    <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
-                                    </div>
-                                    <input type="file" name="myfile"> <br>
-                                    
-                                  </form>
+                                <div class="row"></div>
+                                <div class="col-12"><h2>List of <b>Assignments</b></h2></div>
+                                <div class="float-right">
+                                    <a href="lecturer-create.php" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Assignment</a>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Instruction</th>
+                                                <th>Status</th>
+                                                <th>Created On</th>
+                                                <th>Deadline</th>
+                                                <th>Class</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['assignment_id'] . '</td>';
+                                                    echo '<td>' . $row['assignment_name'] . '</td>';
+                                                    echo '<td>' . $row['instruction'] . '</td>';
+                                                    echo '<td>' . $row['status'] . '</td>';
+                                                    echo '<td>' . $row['created_date'] . '</td>';
+                                                    echo '<td>' . $row['due_date'] . '</td>';
+                                                    echo '<td>'.$row['class_code']. '</td>';
+                                                    $assignment_id = $row['assignment_id'];
+                                                    $assignment_name = $row['assignment_name'];
+                                                    $instruction = $row['instruction'];
+                                                    $created_date = $row['created_date'];
+                                                    $due_date = $row['due_date'];
+                                                    $code = $row['class_code'];
+                                                    
+                                                    echo '<td><a href="student-assignment-view.php?assignment_id='.$assignment_id.'class_code='.$code.'assignment_name='.$assignment_name.'" type="button" class="btn btn-success">View</a>
+                                                    </td>';
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

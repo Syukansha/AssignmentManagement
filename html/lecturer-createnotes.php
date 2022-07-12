@@ -204,6 +204,10 @@
                                         <label>Notes</label>
                                         <textarea class="form-control" rows="3" name="notecomment" id="notecomment"></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <input type="text" id="code" name="code">
+                                    </div>
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary" name="save">Create Notes</button> 
                                     </div>
