@@ -207,7 +207,7 @@
                                                     echo '<td>' . $row['note_name'].'</td>';
                                                     echo '<td>' . $row['note_create'].'</td>';
                                                     echo '<td>' . $row['class_code'].'</td>';
-                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">Download</a>
+                                                    echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">View</a>
                                                     <a href="lecturer-update-notes.php?noteid'.$row['note_id'].'" class="btn btn-warning">Update</a>
                                                     <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-danger">Delete</a></td>';
                                                     echo '</tr>';
