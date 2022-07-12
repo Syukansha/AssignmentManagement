@@ -206,7 +206,7 @@
                                                     echo '<td>' . $row['note_create'].'</td>';
                                                     echo '<td><a href="lecturer-notes.php?noteid='.$row['note_id'].'" class="btn btn-success">View</a>
                                                     <a href="lecturer-update-notes.php?noteid'.$row['note_id'].'" class="btn btn-warning">Update</a>
-                                                    <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-warning">Delete</a></td>';
+                                                    <a href="lecturer-delete-notes.php?noteid='.$row['note_id'].'" class="btn btn-danger">Delete</a></td>';
                                                     echo '</tr>';
                                                     echo '</tr>';
                                                     $count = $count + 1;
