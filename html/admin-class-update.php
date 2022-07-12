@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <?php
-   include('session.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:index.php');
-    }
-    $sqlclass = "SELECT * from class";
-    $result = mysqli_query($conn,$sqlclass);
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
+     } 
+    $classid = $_GET['id'];
+
+    $sqlclass = "SELECT * FROM class where class_id='$classid'";
+    
+    $resultclass = mysqli_query($conn,$sqlclass);
+    $row = mysqli_fetch_array($resultclass,MYSQLI_ASSOC);
+     
+    $classId = $row['class_id'];
+    $classname = $row['class_name'];
+    $classcode = $row['class_code'];
+    $lectid = $row['lect_id'];
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST['id'];
+        $Name = $_POST['name'];
+        $Code = $_POST['code'];
+        $lect = $_POST['lectid'];
+
+        $sqlupdate = "UPDATE class set class_name='$Name', class_code='$Code', lect_id='$lect' where class_id = '$id'";
+
+        $resultupdate = mysqli_query($conn,$sqlupdate);
+
+        if(isset($resultupdate)){
+            echo "User success updated";
+            echo '<script>';
+            echo 'alert("Successfully add lecturer!");';
+            echo 'location="admin-class.php";';
+            echo '</script>';
+        }
+        else{
+            echo "User failed updated";
+            echo '<script>';
+            echo 'alert("Fail to add lecturer!");';
+            echo 'location="admin-class-update.php";';
+            echo '</script>';
+        }
+    }    
 ?>
 <html lang="en">
 <head>
@@ -68,7 +104,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -96,7 +132,6 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <ul id="sidebarnav">
                         <li> 
                             <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
@@ -116,7 +151,6 @@
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
-                        </ul>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -144,8 +178,9 @@
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item active">Class</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item">Class</li>
+                                <li class="breadcrumb-item active">Edit Class</li>
                             </ol>
                         </div>
                     </div>
@@ -160,50 +195,29 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                            <h4 class="card-title">List of Class</h4>
-                            <div class="float-right">
-                                    <a href="admin-add-class.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Class</a>
-                            </div>
-                                <div class="table-responsive">
+                                <!--Starting-->
+                                <form method="POST" action="updateclass.php">
                                 <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Class Id</th>
-                                                <th>Class Name</th>
-                                                <th>Class Code</th>
-                                                
-                                            </tr>
-                                        </thead>
                                         <tbody>
-                                        <?php
-                                            while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-                                                    echo '<tr>';
-                                                    echo '<td>' . $row['class_id'] . '</td>';
-                                                    echo '<td>' . $row['class_name'] . '</td>';
-                                                    echo '<td>' . $row['class_code'] . '</td>';
-
-                                                    $class_id = $row['class_id'];
-                                                    $class_name = $row['class_name'];
-                                                    $class_code = $row['class_code'];
-                                                    echo '<td><a href="admin-class-view.php?id='.$row['class_id'].'" type="button" class="btn btn-success">View</a>
-                                                    <a href="admin-class-update.php?id='.$row['class_id'].'" type="button" class="btn btn-warning">Update</a>
-                                                    <a href="admin-class-delete.php?id='.$row['class_id'].'" type="button" class="btn btn-danger">Delete</a>
-                                                    </td>';
-                                                    echo '</tr>';
-                                                    
-                                                }
-
-                                            mysqli_close($conn);
-                                        ?>
+                                            <tr>
+                                                <label>ID: </label>
+                                                <input type="text" class="form-control" name="id" id="id" value="<?php echo $classId; ?>" readonly>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $classname; ?>">
+                                                <label>Class Code: </label>
+                                                <input type="text" class="form-control" name="code" id="code" value="<?php echo $classcode; ?>">
+                                                <label>Lecturer Id: </label>
+                                                <input type="text" class="form-control" name="lectid" id="lectid" value="<?php echo $lectid; ?>"><br>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
-                <!-- End Page Content -->
+                <!-- End PAge Content -->
                 <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
