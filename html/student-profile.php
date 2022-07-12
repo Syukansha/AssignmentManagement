@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<?php
+   include('session-student.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:student_login.php');
+    
+    }
+    $sql = "SELECT * from student where student_id = $user_id";
+    $result = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $data = array($row['student_id'], $row['student_name'], $row['student_phone']);
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -60,7 +71,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -151,17 +162,18 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Name</th>
-                                                <th>Email</th>
                                                 <th>Contact</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>2020872304</td>
-                                                <td>Muhammad Abdul Hakim bin Jurimi</td>
-                                                <td>2020872304@student.uitm.edu.my</td>
-                                                <td>+60111234567</td>
-                                            </tr>
+                                            <?php
+                                                foreach($data as $value)  
+                                                {    
+                                                    echo "<td> ". $value."</td>";    
+                                        
+                                                } 
+                                                mysqli_close($conn);
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
