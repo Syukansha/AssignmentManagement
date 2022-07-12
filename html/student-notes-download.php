@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 if (isset($_GET['note_id'])) {
     $id = $_GET['note_id'];
 

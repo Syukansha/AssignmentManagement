@@ -184,7 +184,7 @@
                                         <input type="text" class="form-control" id="code" name="code" value="<?php echo $code ?>">
                                     </div>
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
+                                        <button type="submit" class="btn btn-primary" name="save">Submit</button> 
                                     </div>
                                     <input type="file" name="myfile"> <br>
                                     

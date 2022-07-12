@@ -16,7 +16,6 @@
         $resultassignment = mysqli_query($conn,$sqlassignment );
         $row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC);
 
-
         $assignment_id = $row['assignment_id'];
         $assignment_name = $row['assignment_name'];
         $instruction = $row['instruction'];
@@ -199,9 +198,13 @@
                                         <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline" value="<?php echo $due_date; ?>">
                                     </div>
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Create Assignment</button> 
+                                        
+                                        <?php echo '<td><a href="lecturer-submission.php?assignment_id='.$assignment_id.'" type="button" class="btn btn-success">Submission</a> '
+                                        ?>
                                     </div>
+                                    
                                     <a href="lecturer-assignment-view.php?file_id=<?php echo $row['assignment_id'] ?>">Download</a>
+                                    
                                     
                                   </form>
                             </div>

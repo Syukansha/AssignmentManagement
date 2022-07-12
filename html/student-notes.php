@@ -190,7 +190,7 @@
                                                     $created_date = $row['note_create'];                                                  
                                                     $code = $row['class_code'];
                                                     
-                                                    echo '<td><a href="student-notes-view.php?note_id='.$note_id.'class_code='.$code.'note_name='.$note_name.'" type="button" class="btn btn-success">View</a>
+                                                    echo '<td><a href="student-notes-view.php?note_id='.$note_id.'" type="button" class="btn btn-success">View</a>
                                                     <a href="student-notes.php?note_id='.$note_id.'" type="button" class="btn btn-success">Download</a>
                                                     </td>';
                                                     echo '</tr>';

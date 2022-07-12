@@ -171,7 +171,7 @@
                                                 <th>Class Id</th>
                                                 <th>Class Name</th>
                                                 <th>Class Code</th>
-                                                
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

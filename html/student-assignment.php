@@ -161,9 +161,7 @@
                             <div class="card-body">
                                 <div class="row"></div>
                                 <div class="col-12"><h2>List of <b>Assignments</b></h2></div>
-                                <div class="float-right">
-                                    <a href="lecturer-create.php" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Assignment</a>
-                                </div>
+                                
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>

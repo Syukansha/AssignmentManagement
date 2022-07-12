@@ -182,8 +182,8 @@
                                                     $class_code = $row['class_code'];
                                                     
                                                     
-                                                    echo '<td><a href="lecturer-assignment-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a><a href="lecturer-notes-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
-                                                   
+                                                    echo '<td><a href="lecturer-assignment-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Assignment</a>
+                                                    <a href="lecturer-notes-class.php?class_code='.$class_code.'" type="button" class="btn btn-success">View Note</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     

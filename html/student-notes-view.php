@@ -5,10 +5,46 @@
     header('location:student_login.php');
     
     }
-    $sql = "SELECT * from students where student_id = $user_id";
-    $result = mysqli_query($conn,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $data = array($row['student_id'], $row['student_name'], $row['student_phone']);
+    if(isset($_GET['note_id'])){
+        $id = $_GET['note_id'];
+        $sqlnote = "SELECT * FROM notes where note_id='$id'";
+        $resultnote = mysqli_query($conn,$sqlnote);
+
+        $row = mysqli_fetch_array($resultnote,MYSQLI_ASSOC);
+
+        $note_id = $row['note_id'];
+        $note_name = $row['note_name'];
+        $comment = $row['note_comment'];
+        $code = $row['class_code'];
+        $create = $row['note_create'];
+    }
+    
+    if(isset($_GET['file_id'])){
+        $id = $_GET['file_id'];
+
+    
+        // fetch file to download from database
+        $sql = "SELECT * FROM notes WHERE note_id=$id";
+        $result = mysqli_query($conn, $sql);
+
+        $file = mysqli_fetch_assoc($result);
+        $filepath = 'uploads/' . $file['note_name'];
+
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($filepath));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize('uploads/' . $file['note_name']));
+            readfile('uploads/' . $file['note_name']);
+
+            
+
+            exit;
+        }
+    }
 ?>
 <html lang="en">
 <head>
@@ -68,10 +104,10 @@
                     </a>
                 </div>
                 <div class="ml-4">
-                    <span class="text-success">Assignment Management System (AMS)</span>
+                    <span class="text-success">Assignment Management System (SMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                    <a href="index.html"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -99,20 +135,22 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> 
-                            <a class="waves-effect waves-dark" href="student-home.php" aria-expanded="false">
-                                <i class="fa fa-home"></i><span class="hide-menu">Home</span>
-                            </a>
-                        </li>
-                        <li> 
-                            <a class="waves-effect waves-dark" href="student-profile.php" aria-expanded="false">
-                                <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
-                            </a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="student-class.php" aria-expanded="false">
-                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
-                            </a>
-                        </li>
+                        <ul id="sidebarnav">
+                            <li> 
+                                <a class="waves-effect waves-dark" href="student-home.php" aria-expanded="false">
+                                    <i class="fa fa-home"></i><span class="hide-menu">Home</span>
+                                </a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="student-profile.php" aria-expanded="false">
+                                    <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li> <a class="waves-effect waves-dark" href="student-class.php" aria-expanded="false">
+                                    <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                                </a>
+                            </li>
+                        </ul>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -135,12 +173,13 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Home</h4>
+                        <h4 class="text-themecolor">Class</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active">Home</li>
+                                <li class="breadcrumb-item">Home</li>
+                                <li class="breadcrumb-item active">Class</li>
                             </ol>
                         </div>
                     </div>
@@ -155,28 +194,26 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Contact</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                                foreach($data as $value)  
-                                                {    
-                                                    echo "<td> ". $value."</td>";    
-                                        
-                                                } 
-                                                mysqli_close($conn);
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                
+                                <form action="student-assignment-view.php" method="post" enctype="multipart/form-data" >
+                                    <div class="form-group">
+                                      <label>Name</label>
+                                      <input type="text" class="form-control" id="note-name" name="note-name" value="<?php echo $note_name ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Comment</label>
+                                        <textarea class="form-control" rows="3" id="note-comment" name="note-comment" ><?php echo $comment ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code ?>">
+                                    </div>
+                                    <div class="float-right">
+                                        <a href="student-notes-view.php?file_id=<?php echo $row['note_id'] ?>">Download</a>
+                                    </div>
+                                   
+                                    
+                                  </form>
                             </div>
                         </div>
                     </div>

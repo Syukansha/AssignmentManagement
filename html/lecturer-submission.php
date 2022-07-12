@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <?php
-   include('session-student.php');
-   if(!isset($_SESSION['login_student'])){
-    header('location:student_login.php');
-    
-    }
-    $sql = "SELECT * from students where student_id = $user_id";
-    $result = mysqli_query($conn,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $data = array($row['student_id'], $row['student_name'], $row['student_phone']);
+   include('session-lecturer.php');
+   if(!isset($_SESSION['login_user'])){
+    header('location:lect_login.php');
+   }
+    $id = $_GET['assignment_id'];
+    $sqlassignment = "SELECT * from submission INNER JOIN students ON submission.student_id = students.student_id where assignment_id=$id";
+    $resultassignment = mysqli_query($conn,$sqlassignment);
+    $row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC);
+
+    /*$studentID = $row['student_id'];
+
+    $stud = "SELECT * from students where student_id= '.$studentID.'";
+    $result = mysqli_query($conn,$stud);
+    $row2 = mysqli_fetch_array($result,MYSQLI_ASSOC);*/
+
 ?>
 <html lang="en">
 <head>
@@ -100,17 +106,20 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> 
-                            <a class="waves-effect waves-dark" href="student-home.php" aria-expanded="false">
-                                <i class="fa fa-home"></i><span class="hide-menu">Home</span>
-                            </a>
-                        </li>
-                        <li> 
-                            <a class="waves-effect waves-dark" href="student-profile.php" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="student-class.php" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="lecturer-classroom.php" aria-expanded="false">
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
                             </a>
                         </li>
                     </ul>
@@ -135,12 +144,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Home</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active">Home</li>
+                                <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
+                                <li class="breadcrumb-item active">Assignment</li>
                             </ol>
                         </div>
                     </div>
@@ -155,25 +166,38 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
+                                <div class="row"></div>
+                                <div class="col-12"><h2>List of <b>Submission</b></h2></div>
+                                
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Contact</th>
+                                                <th>Submission Name</th>
+                                                <th>Deadline</th>
+                                                <th>Student Id</th>
+                                                <th>Student Name</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                                foreach($data as $value)  
-                                                {    
-                                                    echo "<td> ". $value."</td>";    
-                                        
-                                                } 
-                                                mysqli_close($conn);
-                                            ?>
+                                        <?php
+                                            while($row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC)) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['sub_id'] . '</td>';
+                                                    echo '<td>' . $row['sub_name'] . '</td>';  
+                                                    echo '<td>' . $row['sub_date'] . '</td>';
+                                                    echo '<td>' . $row['student_id'] . '</td>';
+                                                    echo '<td>' . $row['student_name'] . '</td>';
+                                                    
+                                                    
+                                                    echo '</tr>';
+                                                    
+                                                }
+
+                                            mysqli_close($conn);
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>
