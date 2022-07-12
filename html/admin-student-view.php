@@ -124,7 +124,7 @@
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="admin-class.php" aria-expanded="false">
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
@@ -157,7 +157,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
                                 <li class="breadcrumb-item">Student</li>
-                                <li class="breadcrumb-item active">Add Student</li>
+                                <li class="breadcrumb-item active">Student Details</li>
                             </ol>
                         </div>
                     </div>

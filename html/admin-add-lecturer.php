@@ -19,9 +19,17 @@
     
         if(isset($resultlect)){
             echo "Success";
+            echo '<script>';
+            echo 'alert("Successfully add lecturer!");';
+            echo 'location="admin-lecturer.php";';
+            echo '</script>';
         }
         else{
             echo "failed";
+            echo '<script>';
+            echo 'alert("Fail to add lecturer!");';
+            echo 'location="admin-add-lecturer.php";';
+            echo '</script>';
         }
     }
 ?>
@@ -129,7 +137,7 @@
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="admin-class.php" aria-expanded="false">
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
@@ -161,7 +169,7 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item">Student</li>
+                                <li class="breadcrumb-item">Lecturer</li>
                                 <li class="breadcrumb-item active">Add Lecturer</li>
                             </ol>
                         </div>

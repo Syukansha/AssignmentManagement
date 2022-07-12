@@ -1,8 +1,8 @@
 <?php 
     include('connectDB.php');
     include('session.php');
-    $studentID = $_GET['id'];
-    $sqldelete = "DELETE FROM students where student_id = '$studentID'";
+    $lectid = $_GET['id'];
+    $sqldelete = "DELETE FROM lecturer where lect_id = '$lectid'";
 
     $resultdelete = mysqli_query($conn,$sqldelete);
 
@@ -10,14 +10,14 @@
         echo "User success deleted";
         echo '<script>';
         echo 'alert("Successfully deleted!");';
-        echo 'location="admin-student.php";';
+        echo 'location="admin-lecturer.php";';
         echo '</script>';
     }
     else{
         echo "User failed deleted";
         echo '<script>';
-        echo 'alert("Fail to delete!");';
-        echo 'location="admin-student.php";';
+        echo 'alert("Fail to delete");';
+        echo 'location="admin-lecturer.php";';
         echo '</script>';
     }
 ?>

@@ -125,7 +125,7 @@
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="admin-class.php" aria-expanded="false">
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
@@ -151,14 +151,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Student</h4>
+                        <h4 class="text-themecolor">Lecturer</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item">Student</li>
-                                <li class="breadcrumb-item active">Add Student</li>
+                                <li class="breadcrumb-item">Lecturer</li>
+                                <li class="breadcrumb-item active">Lecturer Details</li>
                             </ol>
                         </div>
                     </div>

@@ -97,20 +97,25 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <ul id="sidebarnav">
-                            <li> 
-                                <a class="waves-effect waves-dark" href="student-home.html" aria-expanded="false">
-                                    <i class="fa fa-home"></i><span class="hide-menu">Home</span>
-                                </a>
-                            </li>
-                            <li> 
-                                <a class="waves-effect waves-dark" href="student-profile.html" aria-expanded="false">
-                                    <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
-                                </a>
-                            </li>
-                            <li> <a class="waves-effect waves-dark" href="student-class.html" aria-expanded="false">
-                                    <i class="fa fa-group"></i><span class="hide-menu">Class</span>
-                                </a>
-                            </li>
+                        <li> 
+                            <a class="waves-effect waves-dark" href="admin-profile.php" aria-expanded="false">
+                                <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a class="waves-effect waves-dark" href="admin-student.php" aria-expanded="false">
+                                <i class="fa fa-child"></i><span class="hide-menu">Student</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" href="admin-lecturer.php" aria-expanded="false">
+                                <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="admin-class.php" aria-expanded="false">
+                                <i class="fa fa-group"></i><span class="hide-menu">Class</span>
+                            </a>
+                        </li>
                         </ul>
                     </ul>
                 </nav>
@@ -156,6 +161,9 @@
                         <div class="card">
                             <div class="card-body">
                             <h4 class="card-title">List of Class</h4>
+                            <div class="float-right">
+                                    <a href="admin-add-class.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Class</a>
+                            </div>
                                 <div class="table-responsive">
                                 <table class="table table-bordered">
                                         <thead>

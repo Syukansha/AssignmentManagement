@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <?php
-   include('session.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:login.php');    
-}
-$sqllecturer = "SELECT lect_id,lect_name,lect_email,lect_phone,password from lecturers";
-$resultlecturer = mysqli_query($conn,$sqllecturer);
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
+     } 
+    $lectId = $_GET['id'];
+
+    $sqllect = "SELECT * FROM lecturer where lect_id='$lectId'";
+    
+    $resultLect = mysqli_query($conn,$sqllect);
+    $row = mysqli_fetch_array($resultLect,MYSQLI_ASSOC);
+     
+    $lectid = $row['lect_id'];
+    $lectname = $row['lect_name'];
+    $lectemail = $row['lect_email'];
+    $lectphone = $row['lect_phone'];
+    $lectpass = $row['password'];
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $lid = $_POST['id'];
+        $Name = $_POST['name'];
+        $Email = $_POST['email'];
+        $Phone = $_POST['phone'];
+        $Pass = $_POST['pass'];
+
+        $sqlupdate = "UPDATE lecturer set lect_name='$Name', lect_phone='$Phone', password='$Pass', lect_email='$Email' where lect_id = '$lid'";
+
+        $resultupdate = mysqli_query($conn,$sqlupdate);
+
+        if(isset($resultupdate)){
+            echo "User success updated";
+            echo '<script>';
+            echo 'alert("Successfully update!");';
+            echo 'location="admin-lecturer.php";';
+            echo '</script>';
+        }
+        else{
+            echo "User failed updated";
+            echo '<script>';
+            echo 'alert("Fail to update!");';
+            echo 'location="admin-lect-update.php";';
+            echo '</script>';
+        }
+    }    
 ?>
 <html lang="en">
 <head>
@@ -68,7 +106,7 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -143,7 +181,8 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item active">Lecturer</li>
+                                <li class="breadcrumb-item">Lecturer</li>
+                                <li class="breadcrumb-item active">Edit Lecturer</li>
                             </ol>
                         </div>
                     </div>
@@ -158,49 +197,26 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row"></div>
-                                <div class="col-12"><h2>List of <b>Lecturer</b></h2></div>
-                                <div class="float-right">
-                                    <a href="admin-add-lecturer.php" type="button" class="btn btn-info btn-square-md"><i class="fa fa-plus"></i> Lecturer</a>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+                                <!--Starting-->
+                                <form method="POST" action="admin-lect-update.php">
+                                <table class="table table-bordered">
                                         <tbody>
-                                        <?php
-                                            while($row = mysqli_fetch_array($resultlecturer ,MYSQLI_ASSOC)) {
-                                                    echo '<tr>';
-                                                    echo '<td>' . $row['lect_id'] . '</td>';
-                                                    echo '<td>' . $row['lect_name'] . '</td>';
-                                                    echo '<td>' . $row['lect_email'] . '</td>';
-                                                    echo '<td>' . $row['lect_phone'] . '</td>';
-                                                    
-                                                    $lectID = $row['lect_id'];
-                                                    $lectName = $row['lect_name'];
-                                                    $lectEmail = $row['lect_email'];
-                                                    $lectPhone = $row['lect_phone'];
-                                                    echo '<td><a href="admin-lect-view.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-success">View</a>
-                                                    <a href="admin-lect-update.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-warning">Update</a>
-                                                    <a href="admin-lect-delete.php?id='.$lectID.'" type="button" class="btn btn-danger">Delete</a>
-                                                    </td>';
-                                                    echo '</tr>';
-                                                    
-                                                }
-
-                                            mysqli_close($conn);
-                                        ?>
+                                            <tr>
+                                                <label>ID: </label>
+                                                <input type="text" class="form-control" name="id" id="id" value="<?php echo $lectId; ?>" readonly>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $lectname; ?>">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email" value="<?php echo $lectemail; ?>">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone"value="<?php echo $lectphone; ?>">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass" value="<?php echo $lectpass; ?>">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>

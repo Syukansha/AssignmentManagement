@@ -113,7 +113,7 @@ $data = array($row['admin_id'], $row['admin_name'], $row['admin_email'], $row['a
                                 <i class="fa fa-user"></i><span class="hide-menu">Lecturer</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="admin-class.php" aria-expanded="false">
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
