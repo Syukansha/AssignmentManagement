@@ -7,10 +7,10 @@
 
   if($_SERVER["REQUEST_METHOD"] == "POST") {
   
-      $classcode = $_POST['class_code'];
+      $classcode = $_POST['code'];
       $comment = $_POST['notecomment'];
       $date = date('Y-m-d');
-      $lect_id = "1234"; //nanti replcae id lecturer kat sini
+       //nanti replcae id lecturer kat sini
       
       //upload file
        // name of the uploaded file

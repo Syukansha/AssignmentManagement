@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
    include('session-student.php');
+   include('student-notes-download.php');
    if(!isset($_SESSION['login_student'])){
     header('location:student_login.php');
     
@@ -169,7 +170,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Name</th>
-                                                <th>Comment</th>
+                                                
                                                 <th>Upload on</th>
                                                 <th>Class</th>
                                                 <th>Action</th>
@@ -180,8 +181,7 @@
                                             while($row = mysqli_fetch_array($resultnotes,MYSQLI_ASSOC)) {
                                                     echo '<tr>';
                                                     echo '<td>' . $row['note_id'] . '</td>';
-                                                    echo '<td>' . $row['note_name'] . '</td>';
-                                                    echo '<td>' . $row['note_comment'] . '</td>';                                        
+                                                    echo '<td>' . $row['note_name'] . '</td>';                          
                                                     echo '<td>' . $row['note_create'] . '</td>';
                                                     echo '<td>'.$row['class_code']. '</td>';
                                                     $note_id = $row['note_id'];
@@ -190,7 +190,8 @@
                                                     $created_date = $row['note_create'];                                                  
                                                     $code = $row['class_code'];
                                                     
-                                                    echo '<td><a href="student-assignment-view.php?note_id='.$note_id.'class_code='.$code.'note_name='.$note_name.'" type="button" class="btn btn-success">View</a>
+                                                    echo '<td><a href="student-notes-view.php?note_id='.$note_id.'class_code='.$code.'note_name='.$note_name.'" type="button" class="btn btn-success">View</a>
+                                                    <a href="student-notes.php?note_id='.$note_id.'" type="button" class="btn btn-success">Download</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     
