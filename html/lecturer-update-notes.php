@@ -39,7 +39,10 @@
                 $sql = "UPDATE notes SET note_name = '$filename', note_size = '$size', note_comment = '$comment', note_create = '$date', lect_id = '$lectid' WHERE note_id = '$id'";
                 if (mysqli_query($conn, $sql)) {
                     echo "File uploaded successfully";
-                    header('Location: lecturer-notes.php');
+                    echo '<script>';
+                    echo 'alert("Successfully updated!");';
+                    echo 'location="lecturer-notes.php";';
+                    echo '</script>';
                 }else{
                     die(mysqli_error($conn));
                 }
@@ -149,6 +152,10 @@
                         </li>
                         <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
                             </a>
                         </li>
                     </ul>

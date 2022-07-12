@@ -123,7 +123,7 @@
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
@@ -161,7 +161,7 @@
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="lecturer-classroom.php">Class</a></li>
                                 <li class="breadcrumb-item"><a href="lecturer-assignment.php">Assignment</a></li>
-                                <li class="breadcrumb-item active">Assignment</li>
+                                <li class="breadcrumb-item active">Assignment Details</li>
                             </ol>
                         </div>
                     </div>

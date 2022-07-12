@@ -7,7 +7,10 @@
 
     if(isset($resultdelete)){
         echo "notes success deleted";
-        header("location: lecturer-notes.php");
+        echo '<script>';
+        echo 'alert("Successfully deleted!");';
+        echo 'location="lecturer-notes.php";';
+        echo '</script>';
     }
     else{
         echo "notes failed deleted";

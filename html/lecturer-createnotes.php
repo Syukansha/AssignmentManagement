@@ -37,7 +37,10 @@
                 $sql = "INSERT INTO notes(note_name, note_size, note_comment, note_create, lect_id) VALUES ('$filename', '$size', '$comment', '$date','$user_id')";
                 if (mysqli_query($conn, $sql)) {
                     echo "File uploaded successfully";
-                    header('Location: lecturer-notes.php');
+                    echo '<script>';
+                    echo 'alert("Successfully added!");';
+                    echo 'location="lecturer-notes.php";';
+                    echo '</script>';
                 }
             } else {
                 echo "Failed to upload file.";
@@ -134,7 +137,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> 
+                    <li> 
                             <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
@@ -145,6 +148,10 @@
                         </li>
                         <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
+                            </a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="lecturer-assignment.php" aria-expanded="false">
+                                <i class="fa fa-book"></i><span class="hide-menu">Assignment</span>
                             </a>
                         </li>
                     </ul>

@@ -38,6 +38,9 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
             $sql = "INSERT INTO assignment (assignment_name, status,instruction,created_date,due_date,size,class_code,lect_id) VALUES ('$filename', '$status','$instruction','$created','$deadline',$size,'$code',$user_id)";
             if (mysqli_query($conn, $sql)) {
                 echo "File uploaded successfully";
+                echo '<script>';
+                echo 'alert("Successfully uploaded!");';
+                echo '</script>';
             }
         } else {
             echo "Failed to upload file.";

@@ -188,7 +188,7 @@ $resultlecturer = mysqli_query($conn,$sqllecturer);
                                                     $lectEmail = $row['lect_email'];
                                                     $lectPhone = $row['lect_phone'];
                                                     echo '<td><a href="admin-lect-view.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-success">View</a>
-                                                    <a href="admin-lect-update.php?id='.$lectID.'?name='.$lectName.'" type="button" class="btn btn-warning">Update</a>
+                                                    <a href="admin-lect-update.php?id='.$lectID.'" type="button" class="btn btn-warning">Update</a>
                                                     <a href="admin-lect-delete.php?id='.$lectID.'" type="button" class="btn btn-danger">Delete</a>
                                                     </td>';
                                                     echo '</tr>';

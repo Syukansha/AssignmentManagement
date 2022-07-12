@@ -104,7 +104,7 @@
                                 <i class="fa fa-group"></i><span class="hide-menu">Class</span>
                             </a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <li> <a class="waves-effect waves-dark" href="lecturer-notes.php" aria-expanded="false">
                                 <i class="fa fa-book"></i><span class="hide-menu">Notes</span>
                             </a>
                         </li>
