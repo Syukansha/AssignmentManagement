@@ -205,18 +205,44 @@
                             <div class="card-body">
                                 <h4 class="card-title">Update Notes</h4><hr>
                                 <form action="updatenotes.php" method="post" enctype="multipart/form-data" >
+<<<<<<< Updated upstream
                                 <form action="lecturer-update-notes.php" method="post" enctype="multipart/form-data" >
+=======
+<<<<<<< HEAD
+                                <div class="form-group">
+                                      <label>Name</label>
+                                      <input type="text" class="form-control" id="note-name" name="note-name" value="<?php echo $row['note_name']; ?>" readonly>
+                                    </div>
+=======
+                                <form action="lecturer-update-notes.php" method="post" enctype="multipart/form-data" >
+>>>>>>> 2ee9511f9f9882f310d2da9c4867ca74af4fab54
                                     <div class="form-group">
-                                        <label>Notes</label>
-                                        <textarea class="form-control" rows="3" name="notecomment" id="notecomment"><?php echo $row['note_comment'];?></textarea>
+                                        <label>Comment</label>
+                                        <textarea class="form-control" rows="3" id="note-comment" name="note-comment" ><?php echo $row['note_comment']; ?></textarea>
+                                    </div>
+>>>>>>> Stashed changes
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $row['class_code']; ?>" readonly>
                                     </div>
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary" name="save">Update Notes</b> 
                                     </div>
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+                                    <input type="file" name="myfile"><br>
+                                    <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
+=======
+>>>>>>> Stashed changes
                                         <input type="file" name="myfile"><br>
                                         <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
                                         <input type="hidden" name="fname" value="<?php echo $row['note_name'];?>">
                                         <input type="hidden" name="lectid" value="<?php echo $row['lect_id'];?>">
+<<<<<<< Updated upstream
+=======
+>>>>>>> 2ee9511f9f9882f310d2da9c4867ca74af4fab54
+>>>>>>> Stashed changes
                                   </form>
                             </div>
                         </div>

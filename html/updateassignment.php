@@ -35,7 +35,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               if (mysqli_query($conn, $sql)) {
                   echo "File uploaded successfully";
                   echo '<script>';
+<<<<<<< Updated upstream
                   echo 'alert("Successfully Updated!");';
+=======
+<<<<<<< HEAD
+                  echo 'alert("Successfully update!");';
+=======
+                  echo 'alert("Successfully Updated!");';
+>>>>>>> 2ee9511f9f9882f310d2da9c4867ca74af4fab54
+>>>>>>> Stashed changes
                   echo 'location="lecturer-assignment.php";';
                   echo '</script>';
               }else{

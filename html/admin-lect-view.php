@@ -179,13 +179,13 @@
                                         <tbody>
                                             <tr>
                                                 <label>Name: </label>
-                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $lectName; ?>">
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $lectName; ?>" readonly>
                                                 <label>Email: </label>
-                                                <input type="text" class="form-control" name="email" id="email" value="<?php echo $lectEmail; ?>">
+                                                <input type="text" class="form-control" name="email" id="email" value="<?php echo $lectEmail; ?>" readonly>
                                                 <label>Phone: </label>
-                                                <input type="text" class="form-control" name="phone" id="phone"value="<?php echo $lectPhone; ?>">
+                                                <input type="text" class="form-control" name="phone" id="phone"value="<?php echo $lectPhone; ?>" readonly>
                                                 <label>Password: </label>
-                                                <input type="text" class="form-control" name="pass" id="pass" value="<?php echo $lectPass; ?>">
+                                                <input type="text" class="form-control" name="pass" id="pass" value="<?php echo $lectPass; ?>" readonly>
                                                 <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
                                         </tbody>

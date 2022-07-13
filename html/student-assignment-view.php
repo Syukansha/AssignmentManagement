@@ -169,19 +169,19 @@
                                 <form action="student-assignment-view.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
                                       <label>Name</label>
-                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name ?>">
+                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Instruction</label>
-                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction" ><?php echo $instruction ?></textarea>
+                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction" readonly><?php echo $instruction ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>ID</label>
-                                        <input type="text" class="form-control" id="assignment-id" name="assignment-id" value="<?php echo $assignment_id ?>">
+                                        <input type="text" class="form-control" id="assignment-id" name="assignment-id" value="<?php echo $assignment_id ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Class</label>
-                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code ?>">
+                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code ?>" readonly>
                                     </div>
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary" name="save">Submit</button> 

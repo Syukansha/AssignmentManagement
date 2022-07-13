@@ -202,15 +202,15 @@
                                 <form action="lecturer-notes-view.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
                                       <label>Name</label>
-                                      <input type="text" class="form-control" id="note-name" name="note-name" value="<?php echo $note_name; ?>">
+                                      <input type="text" class="form-control" id="note-name" name="note-name" value="<?php echo $note_name; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Comment</label>
-                                        <textarea class="form-control" rows="3" id="note-comment" name="note-comment" ><?php echo $comment; ?></textarea>
+                                        <textarea class="form-control" rows="3" id="note-comment" name="note-comment" readonly><?php echo $comment; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Class</label>
-                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code; ?>">
+                                        <input type="text" class="form-control" id="code" name="code" value="<?php echo $code; ?>"readonly>
                                     </div>
                                     <div class="float-right">
                                         <a href="lecturer-notes-view.php?file_id=<?php echo $note_id; ?>">Download</a>

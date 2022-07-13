@@ -179,23 +179,23 @@
                                 <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
                                       <label>Name</label>
-                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name; ?>">
+                                      <input type="text" class="form-control" id="assignment-name" name="assignment-name" value="<?php echo $assignment_name; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Instruction</label>
-                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction"><?php echo $instruction; ?></textarea>
+                                        <textarea class="form-control" rows="3" id="assignment-instruction" name="assignment-instruction" readonly><?php echo $instruction; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Status</label>
-                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status" value="<?php echo $status; ?>">
+                                        <input type="text" class="form-control" id="assignment-status" name="assignment-status" value="<?php echo $status; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Created on</label>
-                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created" value="<?php echo $created_date; ?>">
+                                        <input type="date" class="form-control" id="assignment-created" name="assignment-created" value="<?php echo $created_date; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label>Deadline</label>
-                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline" value="<?php echo $due_date; ?>">
+                                        <input type="date" class="form-control" id="assignment-deadline" name="assignment-deadline" value="<?php echo $due_date; ?>" readonly>
                                     </div>
                                     <div class="float-right">
                                         

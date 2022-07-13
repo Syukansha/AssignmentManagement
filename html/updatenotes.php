@@ -31,7 +31,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               $sql = "UPDATE notes SET note_name = '$filename', note_size = '$size', note_comment = '$comment', note_create = '$date' WHERE note_id = '$id'";
               if (mysqli_query($conn, $sql)) {
                   echo "File uploaded successfully";
-                  header('Location: lecturer-notes.php');
+                  echo '<script>';
+                  echo 'alert("Successfully update!");';
+                  echo 'location="lecturer-notes.php";';
+                  echo '</script>';
               }else{
                   die(mysqli_error($conn));
               }
