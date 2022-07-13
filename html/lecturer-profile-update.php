@@ -1,14 +1,49 @@
 <!DOCTYPE html>
 <?php
-   include('session-lecturer.php');
-   if(!isset($_SESSION['login_user'])){
-    header('location:lect_login.php');
+    include('connectDB.php');
+    include('session.php');
+    if(!isset($_SESSION['login_user'])){
+    header('location:login.php');
+     } 
+    $lectId = $_GET['lectid'];
+
+    $sqllect = "SELECT * FROM lecturers where lect_id='$lectId'";
     
-    }
-    $sql = "SELECT * from lecturers where lect_id = $user_id";
-    $result = mysqli_query($conn,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $data = array($row['lect_id'], $row['lect_name'], $row['lect_email'], $row['lect_phone']);
+    $resultLect = mysqli_query($conn,$sqllect);
+    $row = mysqli_fetch_array($resultLect,MYSQLI_ASSOC);
+     
+    $lectid = $row['lect_id'];
+    $lectname = $row['lect_name'];
+    $lectemail = $row['lect_email'];
+    $lectphone = $row['lect_phone'];
+    $lectpass = $row['password'];
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $lid = $_POST['id'];
+        $Name = $_POST['name'];
+        $Email = $_POST['email'];
+        $Phone = $_POST['phone'];
+        $Pass = $_POST['pass'];
+
+        $sqlupdate = "UPDATE lecturers set lect_name='$Name', lect_phone='$Phone', password='$Pass', lect_email='$Email' where lect_id = '$lid'";
+
+        $resultupdate = mysqli_query($conn,$sqlupdate);
+
+        if(isset($resultupdate)){
+            echo "User success updated";
+            echo '<script>';
+            echo 'alert("Successfully update!");';
+            echo '</script>';
+            header("location: lecturer-profile.php");
+        }
+        else{
+            echo "User failed updated";
+            echo '<script>';
+            echo 'alert("Fail to update!");';
+            echo 'location="lecturer-profile-update.php";';
+            echo '</script>';
+        }
+    }    
 ?>
 <html lang="en">
 <head>
@@ -57,7 +92,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="index.html">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -71,7 +106,7 @@
                     <span class="text-success">Assignment Management System (AMS)</span>
                 </div>
                 <div class="ml-auto px-3">
-                    <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
+                <a href="logout.php"><span class="text-danger">Logout </span><i class="fa fa-sign-out text-danger"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -99,7 +134,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> 
+                    <li> 
                             <a class="waves-effect waves-dark" href="lecturer-profile.php" aria-expanded="false">
                                 <i class="fa fa-user-circle"></i><span class="hide-menu">Profile</span>
                             </a>
@@ -138,13 +173,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Lecturer Profile</h4>
+                        <h4 class="text-themecolor">Lecturer</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item active">Lecturer Profile</li>
+                                <li class="breadcrumb-item">Lecturer</li>
+                                <li class="breadcrumb-item active">Add Lecturer</li>
                             </ol>
                         </div>
                     </div>
@@ -159,30 +195,26 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Personal Information</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                <!--Starting-->
+                                <form method="POST" action="lecturer-profile-update.php">
+                                <table class="table table-bordered">
+                                        <tbody>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Contact</th>
-                                                <th>Action</th>
+                                                <label>ID: </label>
+                                                <input type="text" class="form-control" name="id" id="id" value="<?php echo $lectId; ?>" readonly>
+                                                <label>Name: </label>
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $lectname; ?>">
+                                                <label>Email: </label>
+                                                <input type="text" class="form-control" name="email" id="email" value="<?php echo $lectemail; ?>">
+                                                <label>Phone: </label>
+                                                <input type="text" class="form-control" name="phone" id="phone"value="<?php echo $lectphone; ?>">
+                                                <label>Password: </label>
+                                                <input type="text" class="form-control" name="pass" id="pass" value="<?php echo $lectpass; ?>">
+                                                <button type="submit" class="btn btn-success">Submit</button>
                                             </tr>
-                                        </thead>
-                                        <?php
-                                            foreach($data as $value)  
-                                            {    
-                                                 echo "<td> ". $value."</td>";    
-                                      
-                                            } 
-                                            echo '<td><a href="lecturer-profile-update?lectid='.$row['lect_id'].'" class="btn btn-success">Edit</a></td>';
-                                            mysqli_close($conn);
-                                        ?>
+                                        </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
