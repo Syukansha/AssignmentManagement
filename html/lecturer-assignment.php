@@ -195,8 +195,8 @@
                                                     $due_date = $row['due_date'];
                                                     
                                                     echo '<td><a href="lecturer-assignment-view.php?assignment_id='.$assignment_id.'" type="button" class="btn btn-success">View</a>
-                                                    <button type="button" class="btn btn-warning">Update</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    <a href="lecturer-assignment-update.php?assignment_id='.$assignment_id.'" type="button" class="btn btn-warning">Update</a>
+                                                    <a href="lecturer-assignment-delete.php?assignment_id='.$assignment_id.'" type="button" class="btn btn-danger">Delete</a>
                                                     </td>';
                                                     echo '</tr>';
                                                     

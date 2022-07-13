@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <?php
-    include('connect.php');
-    $id = $_GET['noteid'];
-    $showsql = "SELECT * FROM notes WHERE note_id = '$id'";
-    $resultstud = mysqli_query($conn,$showsql);
-    $row = mysqli_fetch_array($resultstud,MYSQLI_ASSOC);
+     include('session-lecturer.php');
+     if(!isset($_SESSION['login_user'])){
+      header('location:lect_login.php');
+      }
+    if (isset($_GET['assignment_id'])) {
+
+        $id = $_GET['assignment_id'];
+        $sqlassignment = "SELECT * FROM assignment where assignment_id='$id'";
+    
+        $resultassignment = mysqli_query($conn,$sqlassignment );
+        $row = mysqli_fetch_array($resultassignment,MYSQLI_ASSOC);
+    
+        $assignmentid = $row['assignment_id'];
+        $assignmentname = $row['assignment_name'];
+        $instruction = $row['instruction'];
+        $status = $row['status'];
+        $create = $row['created_date'];
+        $due = $row['due_date'];
+        $class = $row['class_code'];
+        $lect = $row['lect_id'];
+    } 
 ?>
 <html lang="en">
 <head>
@@ -134,14 +150,14 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Notes</h4>
+                        <h4 class="text-themecolor">Assignment</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="admin-home.php">Home</a></li>
-                                <li class="breadcrumb-item"><a href="lecturer-notes.php">Notes</a></li>
-                                <li class="breadcrumb-item active">Update Notes</li>
+                                <li class="breadcrumb-item"><a href="lecturer-notes.php">Assignment</a></li>
+                                <li class="breadcrumb-item active">Update Assignment</li>
                             </ol>
                         </div>
                     </div>
@@ -157,18 +173,28 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Update Notes</h4><hr>
-                                <form action="updatenotes.php" method="post" enctype="multipart/form-data" >
+                                <form action="updateassignment.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
-                                        <label>Notes</label>
-                                        <textarea class="form-control" rows="3" name="notecomment" id="notecomment"><?php echo $row['note_comment'];?></textarea>
+                                        <label>Assignment Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $assignmentname;?>">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Instruction</label>
+                                        <textarea class="form-control" rows="3" name="instruction" id="instruction"><?php echo $instruction;?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Created at</label>
+                                        <input type="date" class="form-control" id="create" name="create" value="<?php echo $create;?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Due date</label>
+                                        <input type="date" class="form-control" id="due" name="due" value="<?php echo $due;?>">
+                                    </div>
+                                    <input type="hidden" name="assignmentid" value="<?php echo $assignmentid;?>">
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Update Notes</button> 
+                                        <button type="submit" class="btn btn-primary" name="save">Update Assignment</button> 
                                     </div>
                                     <input type="file" name="myfile"><br>
-                                    <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
-                                    <input type="hidden" name="fname" value="<?php echo $row['note_name'];?>">
-                                    <input type="hidden" name="lectid" value="<?php echo $row['lect_id'];?>">
                                   </form>
                             </div>
                         </div>
