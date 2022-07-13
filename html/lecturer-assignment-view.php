@@ -175,7 +175,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Create New Assignment</h4><hr>
+                                <h4 class="card-title">Assignments</h4><hr>
                                 <form action="lecturer-create.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
                                       <label>Name</label>

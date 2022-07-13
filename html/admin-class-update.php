@@ -30,7 +30,7 @@
         if(isset($resultupdate)){
             echo "User success updated";
             echo '<script>';
-            echo 'alert("Successfully add lecturer!");';
+            echo 'alert("Successfully Update class!");';
             echo 'location="admin-class.php";';
             echo '</script>';
         }
@@ -196,7 +196,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!--Starting-->
-                                <form method="POST" action="updateclass.php">
+                                <form method="POST" action="admin-class-update.php">
                                 <table class="table table-bordered">
                                         <tbody>
                                             <tr>

@@ -28,14 +28,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       } elseif ($_FILES['myfile']['size'] > 5000000) { // file shouldn't be larger than 1Megabyte
           echo "File too large!";
       } else {
-          unlink($directory,$namee); //remove previous file
+          
           // move the uploaded (temporary) file to the specified destination
           if (move_uploaded_file($file, $destination)) {
-              $sql = "UPDATE assignment SET assignment_name = '$filename', instruction = '$asginstruction', created_date = '$asgcreate', due_date = '$asgdue',assignment_size = '$size' WHERE assignment_id = '$asgid'";
+              $sql = "UPDATE assignment SET assignment_name = '$filename', instruction = '$asginstruction', created_date = '$asgcreate', due_date = '$asgdue',size = '$size' WHERE assignment_id = '$asgid'";
               if (mysqli_query($conn, $sql)) {
                   echo "File uploaded successfully";
                   echo '<script>';
-                  echo 'alert("Successfully deleted!");';
+                  echo 'alert("Successfully Updated!");';
                   echo 'location="lecturer-assignment.php";';
                   echo '</script>';
               }else{

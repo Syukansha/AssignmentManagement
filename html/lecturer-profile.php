@@ -177,7 +177,7 @@
                                                  echo "<td> ". $value."</td>";    
                                       
                                             } 
-                                            echo '<td><a href="lecturer-profile-update?lectid='.$row['lect_id'].'" class="btn btn-success">Edit</a></td>';
+                                            echo '<td><a href="lecturer-profile-update.php?lectid='.$row['lect_id'].'" class="btn btn-success">Edit</a></td>';
                                             mysqli_close($conn);
                                         ?>
                                     </table>

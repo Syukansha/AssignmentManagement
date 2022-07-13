@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
     include('connectDB.php');
-    include('session.php');
+    include('session-lecturer.php');
     if(!isset($_SESSION['login_user'])){
-    header('location:login.php');
+    header('location:lect_login.php');
      } 
     $lectId = $_GET['lectid'];
 
@@ -29,6 +29,7 @@
 
         $resultupdate = mysqli_query($conn,$sqlupdate);
 
+
         if(isset($resultupdate)){
             echo "User success updated";
             echo '<script>';
@@ -43,6 +44,7 @@
             echo 'location="lecturer-profile-update.php";';
             echo '</script>';
         }
+        
     }    
 ?>
 <html lang="en">

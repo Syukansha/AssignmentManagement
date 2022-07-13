@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <?php
-    include('connect.php');
+    include('connectDB.php');
+    include('session-lecturer.php');
     $id = $_GET['noteid'];
     $showsql = "SELECT * FROM notes WHERE note_id = '$id'";
     $resultstud = mysqli_query($conn,$showsql);
     $row = mysqli_fetch_array($resultstud,MYSQLI_ASSOC);
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+      $comment = $_POST['notecomment'];
+      $date = date('Y-m-d');
+      $id = $_POST['noteid'];
+      $namee = $_POST['fname'];
+      $lectid = $_POST['lect_id'];
+      
+      //upload file
+       // name of the uploaded file
+        $filename = $_FILES['myfile']['name'];
+
+        // destination of the file on the server
+        $destination = 'uploads/' . $filename;
+        $directory = 'uploads/';
+
+        // get the file extension
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+        // the physical file on a temporary uploads directory on the server
+        $file = $_FILES['myfile']['tmp_name'];
+        $size = $_FILES['myfile']['size'];
+
+        if (!in_array($extension, ['zip', 'pdf', 'docx','pptx','jpeg','jpg','png'])) {
+            echo "You file extension must be .zip, .pdf, .docx, .pptx, .jpeg, or .png";
+        } elseif ($_FILES['myfile']['size'] > 5000000) { // file shouldn't be larger than 1Megabyte
+            echo "File too large!";
+        } else {
+            unlink($directory,$namee); //remove previous file
+            // move the uploaded (temporary) file to the specified destination
+            if (move_uploaded_file($file, $destination)) {
+                $sql = "UPDATE notes SET note_name = '$filename', note_size = '$size', note_comment = '$comment', note_create = '$date', lect_id = '$lectid' WHERE note_id = '$id'";
+                if (mysqli_query($conn, $sql)) {
+                    echo "File uploaded successfully";
+                    echo '<script>';
+                    echo 'alert("Successfully updated!");';
+                    echo 'location="lecturer-notes.php";';
+                    echo '</script>';
+                }else{
+                    die(mysqli_error($conn));
+                }
+            } else {
+                echo "Failed to upload file.";
+            }
+        }
+  }  
 ?>
 <html lang="en">
 <head>
@@ -158,17 +205,18 @@
                             <div class="card-body">
                                 <h4 class="card-title">Update Notes</h4><hr>
                                 <form action="updatenotes.php" method="post" enctype="multipart/form-data" >
+                                <form action="lecturer-update-notes.php" method="post" enctype="multipart/form-data" >
                                     <div class="form-group">
                                         <label>Notes</label>
                                         <textarea class="form-control" rows="3" name="notecomment" id="notecomment"><?php echo $row['note_comment'];?></textarea>
                                     </div>
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary" name="save">Update Notes</button> 
+                                        <button type="submit" class="btn btn-primary" name="save">Update Notes</b> 
                                     </div>
-                                    <input type="file" name="myfile"><br>
-                                    <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
-                                    <input type="hidden" name="fname" value="<?php echo $row['note_name'];?>">
-                                    <input type="hidden" name="lectid" value="<?php echo $row['lect_id'];?>">
+                                        <input type="file" name="myfile"><br>
+                                        <input type="hidden" name="noteid" value="<?php echo $row['note_id'];?>">
+                                        <input type="hidden" name="fname" value="<?php echo $row['note_name'];?>">
+                                        <input type="hidden" name="lectid" value="<?php echo $row['lect_id'];?>">
                                   </form>
                             </div>
                         </div>

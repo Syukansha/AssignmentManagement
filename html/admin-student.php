@@ -172,7 +172,6 @@ $resultstudent = mysqli_query($conn,$sqlstudent);
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Contact</th>
-                                                <th>Class</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -184,7 +183,7 @@ $resultstudent = mysqli_query($conn,$sqlstudent);
                                                     echo '<td>' . $row['student_name'] . '</td>';
                                                     echo '<td>' . $row['student_email'] . '</td>';
                                                     echo '<td>' . $row['student_phone'] . '</td>';
-                                                    echo '<td>'  . '</td>';
+                                                   
                                                     $studentID = $row['student_id'];
                                                     $studentName = $row['student_name'];
                                                     $studentEmail = $row['student_email'];
